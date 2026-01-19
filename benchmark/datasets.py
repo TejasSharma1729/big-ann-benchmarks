@@ -12,6 +12,7 @@ import numpy as np
 from scipy.sparse import csr_matrix
 
 from urllib.request import urlretrieve
+from dataset_preparation import install_custom_sparse
 
 from .dataset_io import (
     xbin_mmap, download_accelerated, download, sanitize,
@@ -1316,7 +1317,120 @@ class OpenAIEmbedding1M(DatasetCompetitionFormat):
 
 
 
+class LocalSparseDataset(DatasetCompetitionFormat):
+    def prepare(self, skip_data=False):
+        if not os.path.exists(self.basedir):
+             print(f"Directory {self.basedir} does not exist. Attempting auto-installation...")
+             # Check for known datasets
+             if "movielens" in self.basedir:
+                 install_custom_sparse.install_movielens(BASEDIR)
+             elif "kddb" in self.basedir:
+                 install_custom_sparse.install_kddb(BASEDIR)
+             elif "avazu" in self.basedir:
+                 install_custom_sparse.install_avazu(BASEDIR)
+             else:
+                 print(f"Unknown dataset {self.basedir}, cannot auto-install.")
+
+    def get_dataset_fn(self):
+        return os.path.join(self.basedir, self.ds_fn)
+    
+    def get_dataset_iterator(self, bs=512, split=(1, 0)):
+        filename = os.path.join(self.basedir, self.ds_fn)
+        x = read_sparse_matrix(filename, do_mmap=True)
+        for j0 in range(0, x.shape[0], bs):
+            j1 = min(j0 + bs, x.shape[0])
+            yield x[j0:j1, :]
+            
+    def get_queries(self):
+        filename = os.path.join(self.basedir, self.qs_fn)
+        return read_sparse_matrix(filename, do_mmap=False)
+
+    def get_dataset(self):
+        filename = os.path.join(self.basedir, self.ds_fn)
+        # Use mmap=False to ensure we get the application-level object if needed, 
+        # though read_sparse_matrix usually returns a CSR matrix.
+        return read_sparse_matrix(filename, do_mmap=False)
+
+    def distance(self):
+        return "ip"
+
+    def search_type(self):
+        return "knn"
+    
+    def data_type(self):
+        return "sparse"
+
+class MovielensDataset(LocalSparseDataset):
+    def __init__(self):
+        self.basedir = os.path.join(BASEDIR, "movielens")
+        self.ds_fn = "X.csr"
+        self.qs_fn = "Q.csr"
+        self.gt_fn = "groundtruth.gt" 
+        
+        # Read metadata if possible
+        if os.path.exists(os.path.join(self.basedir, self.ds_fn)):
+             with open(os.path.join(self.basedir, self.ds_fn), "rb") as f:
+                sizes = np.fromfile(f, dtype='int64', count=3)
+                self.nb, self.d, _ = sizes
+        else:
+             self.nb = 0
+             self.d = 0
+        
+        if os.path.exists(os.path.join(self.basedir, self.qs_fn)):
+             with open(os.path.join(self.basedir, self.qs_fn), "rb") as f:
+                sizes = np.fromfile(f, dtype='int64', count=3)
+                self.nq, _, _ = sizes
+        else:
+             self.nq = 0
+
+class KddbDataset(LocalSparseDataset):
+    def __init__(self):
+        self.basedir = os.path.join(BASEDIR, "kddb")
+        self.ds_fn = "X.csr"
+        self.qs_fn = "Q.csr"
+        self.gt_fn = "groundtruth.gt"
+        
+        if os.path.exists(os.path.join(self.basedir, self.ds_fn)):
+             with open(os.path.join(self.basedir, self.ds_fn), "rb") as f:
+                sizes = np.fromfile(f, dtype='int64', count=3)
+                self.nb, self.d, _ = sizes
+        else:
+             self.nb = 0
+             self.d = 0
+        
+        if os.path.exists(os.path.join(self.basedir, self.qs_fn)):
+             with open(os.path.join(self.basedir, self.qs_fn), "rb") as f:
+                sizes = np.fromfile(f, dtype='int64', count=3)
+                self.nq, _, _ = sizes
+        else:
+             self.nq = 0
+
+class AvazuDataset(LocalSparseDataset):
+    def __init__(self):
+        self.basedir = os.path.join(BASEDIR, "avazu")
+        self.ds_fn = "X.csr"
+        self.qs_fn = "Q.csr"
+        self.gt_fn = "groundtruth.gt"
+        
+        if os.path.exists(os.path.join(self.basedir, self.ds_fn)):
+             with open(os.path.join(self.basedir, self.ds_fn), "rb") as f:
+                sizes = np.fromfile(f, dtype='int64', count=3)
+                self.nb, self.d, _ = sizes
+        else:
+             self.nb = 0
+             self.d = 0
+        
+        if os.path.exists(os.path.join(self.basedir, self.qs_fn)):
+             with open(os.path.join(self.basedir, self.qs_fn), "rb") as f:
+                sizes = np.fromfile(f, dtype='int64', count=3)
+                self.nq, _, _ = sizes
+        else:
+             self.nq = 0
+
 DATASETS = {
+    'movielens': lambda: MovielensDataset(),
+    'kddb': lambda: KddbDataset(),
+    'avazu': lambda: AvazuDataset(),
     'bigann-1B': lambda : BigANNDataset(1000),
     'bigann-100M': lambda : BigANNDataset(100),
     'bigann-10M': lambda : BigANNDataset(10),
@@ -1384,4 +1498,5 @@ DATASETS = {
     'random-filter-s': lambda : RandomFilterDS(100000, 1000, 50),
 
     'openai-embedding-1M': lambda: OpenAIEmbedding1M(93652),
+    'custom-sparse': lambda: CustomSparseDataset(),
 }

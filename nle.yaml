@@ -1,0 +1,25 @@
+sparse-1M:
+  nle:
+    docker-tag: null
+    module: benchmark.algorithms.nle
+    constructor: NLE
+    base-args: ["@metric"]
+    run-groups:
+      base:
+        args: |
+             [{}]
+        query-args: |
+             [{"budget": 100}, {"budget": 500}, {"budget": 1000}]
+
+custom-sparse:
+  nle:
+    docker-tag: null
+    module: benchmark.algorithms.nle
+    constructor: NLE
+    base-args: ["@metric"]
+    run-groups:
+      base:
+        args: |
+             [{}]
+        query-args: |
+             [{"budget": 100}, {"budget": 500}, {"budget": 1000}]

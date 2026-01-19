@@ -1,0 +1,56 @@
+sparse-1M:
+  linscan:
+    docker-tag: neurips23-sparse-linscan
+    module: neurips23.sparse.linscan.linscan
+    constructor: Linscan
+    base-args: ["@metric"]
+    run-groups:
+      base:
+        args: |
+          [{}]
+        query-args: |
+          [{"budget":0.5},{"budget":1},{"budget":2},{"budget":4},{"budget":5},{"budget":6},{"budget":7},{"budget":8},{"budget":10}]
+  cufe:
+    docker-tag: neurips23-sparse-cufe
+    module: neurips23.sparse.cufe.linscan
+    constructor: LinscanCUFE
+    base-args: ["@metric"]
+    run-groups:
+      base:
+        args: |
+          [{}]
+        query-args: |
+          [{"budget":0.5},{"budget":1},{"budget":2},{"budget":4},{"budget":5},{"budget":6},{"budget":7},{"budget":8},{"budget":10}]
+  shnsw:
+    docker-tag: neurips23-sparse-shnsw
+    module: neurips23.sparse.shnsw.shnsw
+    constructor: SparseHNSW
+    base-args: ["@metric"]
+    run-groups:
+      base:
+        args: |
+             [{"efConstruction": 200, "M": 32, "buildthreads": -1}]
+        query-args: |
+             [{"efSearch": 100}, {"efSearch": 200}]
+  double-group-testing:
+    docker-tag: null
+    module: benchmark.algorithms.knns
+    constructor: KNNSDoubleGroupTesting
+    base-args: ["@metric"]
+    run-groups:
+      base:
+        args: |
+             [{"k": "@count", "use_threading": true}]
+        query-args: |
+             [{"mode": "batch"}]
+  binary-splitting:
+    docker-tag: null
+    module: benchmark.algorithms.knns
+    constructor: KNNSBinarySplitting
+    base-args: ["@metric"]
+    run-groups:
+      base:
+        args: |
+             [{"k": "@count", "use_threading": true}]
+        query-args: |
+             [{"mode": "single"}]

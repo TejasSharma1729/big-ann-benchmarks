@@ -26,7 +26,10 @@ class BaseRunner():
                 algo.query(X, count)
                 total = (time.time() - start)
                 results = algo.get_results()
-                assert results.shape[0] == X.shape[0]
+                if isinstance(results, tuple):
+                    assert results[0].shape[0] == X.shape[0]
+                else:
+                    assert results.shape[0] == X.shape[0]
             elif search_type == "range":
                 algo.range_query(X, count)
                 total = (time.time() - start)

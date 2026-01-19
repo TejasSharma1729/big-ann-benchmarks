@@ -17,7 +17,7 @@ class LinscanCUFE(BaseANN):
         assert metric == "ip"
         self.name = "cufe_linscan"
         self._index = pylinscancufe.LinscanIndex()
-        self._budget = np.infty
+        self._budget = np.inf
         self.scale = 32767/3.579759 # need to iterate over the dataset to get the maximum value 3.57959
         print("Linscan index initialized: " + str(self._index))
 
@@ -56,6 +56,12 @@ class LinscanCUFE(BaseANN):
             self.queries.append(q)
 
         res = self._index.retrieve_parallel(self.queries, k, threshold_mult, self._budget)
+        
+        # Pad results if necessary
+        for i in range(len(res)):
+            if len(res[i]) < k:
+                res[i] = res[i] + [-1] * (k - len(res[i]))
+                
         self.I = np.array(res, dtype='int32')
 
     def get_results(self):

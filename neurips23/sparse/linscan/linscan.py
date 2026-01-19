@@ -17,7 +17,7 @@ class Linscan(BaseANN):
         assert metric == "ip"
         self.name = "linscan"
         self._index = pylinscan.LinscanIndex()
-        self._budget = np.infty
+        self._budget = np.inf
         print("Linscan index initialized: " + str(self._index))
 
     def fit(self, dataset): # e.g. dataset = "sparse-small"

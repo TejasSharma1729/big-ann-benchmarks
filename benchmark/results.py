@@ -5,6 +5,7 @@ import json
 import os
 import re
 import traceback
+import subprocess
 
 def get_result_filename(dataset=None, count=None, definition=None,
                         query_arguments=None, neurips23track=None, runbook_path=None):
@@ -40,7 +41,12 @@ def get_result_filename(dataset=None, count=None, definition=None,
 
 def add_results_to_h5py(f, search_type, results, count, suffix = ''):
     if search_type == "knn" or search_type == "knn_filtered":
-        neighbors = f.create_dataset('neighbors' + suffix, (len(results), count), 'i', data = results)
+        if isinstance(results, tuple):
+             neighbors_data, distances_data = results
+             f.create_dataset('neighbors' + suffix, data=neighbors_data)
+             f.create_dataset('distances' + suffix, data=distances_data)
+        else:
+             f.create_dataset('neighbors' + suffix, (len(results), count), 'i', data = results)
     elif search_type == "range":
         lims, D, I= results
         f.create_dataset('neighbors' + suffix, data=I)
@@ -84,7 +90,22 @@ def load_all_results(dataset=None, count=None, neurips23track=None, runbook_path
                 properties = dict(f.attrs)
                 yield properties, f
                 f.close()
+            except IOError as e:
+                # User requested to run h5clear -s on read errors
+                print(f"Read error on {fn}: {e}. Attempting h5clear -s...")
+                try:
+                    subprocess.run(['h5clear', '-s', os.path.join(root, fn)], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    # Retry opening after clearing
+                    f = h5py.File(name=os.path.join(root, fn), mode='r+', libver='latest')
+                    properties = dict(f.attrs)
+                    yield properties, f
+                    f.close()
+                    print(f"Successfully recovered {fn}")
+                except Exception as e2:
+                    print(f"WARNING: Skipping locked or corrupt file {fn} (Recovery failed: {e2})")
+                    continue
             except:
+
                 print('Was unable to read', fn)
                 traceback.print_exc()
 

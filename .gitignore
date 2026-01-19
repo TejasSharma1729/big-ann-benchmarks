@@ -1,4 +1,8 @@
 .DS_Store
+.vscode/*
+research-bigann-linscan/*
+research-bigann-linscan-cufe/*
+SHNSW/
 *.pyc
 *.o
 

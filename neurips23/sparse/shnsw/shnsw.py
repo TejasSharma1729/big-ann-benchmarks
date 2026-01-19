@@ -52,12 +52,15 @@ class SparseHNSW(BaseSparseANN):
 
     def set_query_arguments(self, parameters):
         print("开始 set")
-        ef = parameters
+        if isinstance(parameters, dict):
+            ef = parameters["efSearch"]
+        else:
+            ef = parameters
         self.p.set_ef(ef)
 
     def query(self, X, topK):
         # N, _ = X.shape
-        self.I, _ = self.p.knn_query(X.indptr, X.indices, X.data, k=topK, num_threads=self.nt)
+        self.I, self.D = self.p.knn_query(X.indptr, X.indices, X.data, k=topK, num_threads=self.nt)
         
     def get_results(self):
-        return self.I
+        return self.I, self.D

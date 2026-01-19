@@ -39,20 +39,70 @@ def compute_recall_with_distance_ties(true_ids, true_dists, run_ids, count):
  
     return recall, found_tie
 
-def get_recall_values(true_nn, run_nn, count, count_ties=True):
+def compute_recall_oracle(true_dists, run_dists, count):
+    # true_dists is assumed to be sorted best-to-worst (ground truth)
+    gt_size = len(true_dists)
+    if gt_size < count: count = gt_size
+    
+    limit_dist = true_dists[count-1]
+    
+    # Determine direction based on ground truth sorting
+    # If first element is larger than last, then Larger is Better (e.g. Inner Product)
+    # If first element is smaller than last, then Smaller is Better (e.g. L2)
+    # If all equal, direction doesn't matter (only equality checks)
+    smaller_better = True
+    if gt_size > 1 and true_dists[0] > true_dists[-1]:
+        smaller_better = False
+        
+    matches = 0.0
+    epsilon = 1e-5
+    
+    for d in run_dists:
+        # Check for equality (Ties)
+        if abs(d - limit_dist) <= epsilon:
+            matches += 1.0
+            continue
+            
+        # Check for "Better"
+        if smaller_better:
+            if d < limit_dist: matches += 1.0
+        else:
+            if d > limit_dist: matches += 1.0
+            
+    return min(matches, float(count))
+
+
+def get_recall_values(true_nn, run_nn_packed, count, count_ties=True):
     true_ids, true_dists = true_nn
+    
+    # Unpack run_nn
+    if isinstance(run_nn_packed, tuple) and len(run_nn_packed) == 2:
+        run_ids, run_dists = run_nn_packed
+    else:
+        run_ids = run_nn_packed
+        run_dists = None
+
     if not count_ties:
         true_ids = true_ids[:, :count]
-        assert true_ids.shape == run_nn.shape
-    recalls = np.zeros(len(run_nn))
+        assert true_ids.shape == run_ids.shape
+    
+    recalls = np.zeros(len(run_ids))
     queries_with_ties = 0
-    # TODO probably not very efficient
-    for i in range(len(run_nn)):
-        if count_ties:
-            recalls[i], found_tie = compute_recall_with_distance_ties(true_ids[i], true_dists[i], run_nn[i], count)
-            if found_tie: queries_with_ties += 1 
+    
+    for i in range(len(run_ids)):
+        if count_ties and true_dists is not None:
+            # Oracle Mode: If we have run distances, use them to verify against GT score threshold.
+            # This handles the case where GT file size < Number of Ties (which breaks set-based intersection).
+            if run_dists is not None:
+                matches = compute_recall_oracle(true_dists[i], run_dists[i], count)
+                recalls[i] = matches
+                queries_with_ties += 1 # Assume all oracle checks might involve ties/logic
+            else:
+                 # Fallback to Set Expansion (relies on GT file containing all tied IDs)
+                recalls[i], found_tie = compute_recall_with_distance_ties(true_ids[i], true_dists[i], run_ids[i], count)
+                if found_tie: queries_with_ties += 1 
         else:
-            recalls[i] = compute_recall_without_distance_ties(true_ids[i], run_nn[i], count)
+            recalls[i] = compute_recall_without_distance_ties(true_ids[i], run_ids[i], count)
     return (np.mean(recalls) / float(count),
             np.std(recalls) / float(count),
             recalls,

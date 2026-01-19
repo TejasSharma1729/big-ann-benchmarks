@@ -1,0 +1,26 @@
+sparse-1M:
+  max_pts: 1000000
+  1:
+    end: 500000
+    operation: insert
+    start: 0
+  2:
+    operation: search
+  3:
+    end: 600000
+    operation: insert
+    start: 500000
+  4:
+    operation: search
+  5:
+    end: 800000
+    operation: insert
+    start: 600000
+  6:
+    operation: search
+  7:
+    end: 1000000
+    operation: insert
+    start: 800000
+  8:
+    operation: search

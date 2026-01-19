@@ -73,6 +73,11 @@ def main():
         default='sift-1M',
         choices=DATASETS.keys())
     parser.add_argument(
+        '--dataset-path',
+        metavar='PATH',
+        help='path to custom dataset directory (required for custom-sparse)',
+        default=None)
+    parser.add_argument(
         "-k", "--count",
         default=-1,
         type=int,
@@ -175,6 +180,9 @@ def main():
         list_algorithms(args.definitions)
         sys.exit(0)
 
+    if args.dataset_path:
+        os.environ['CUSTOM_DATASET_PATH'] = args.dataset_path
+
     if args.power_capture:
         # validate power capture environment
         power_capture( args.power_capture )
@@ -265,4 +273,8 @@ def main():
     workers = [multiprocessing.Process(target=run_worker, args=(args, queue))
                for i in range(1)]
     [worker.start() for worker in workers]
-    [worker.join() for worker in workers]
+    for worker in workers:
+        worker.join()
+        if worker.exitcode != 0:
+            logger.error(f"Worker process died with exit code {worker.exitcode}")
+            sys.exit(worker.exitcode)

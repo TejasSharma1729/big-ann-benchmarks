@@ -1,10 +1,13 @@
-import argparse
+import argparse, sys, os
 from tqdm import tqdm
 import time
 import numpy as np
 from scipy.sparse import csr_matrix, hstack
 from multiprocessing.pool import ThreadPool
 
+CUR_DIR: str = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR: str = os.path.abspath(os.path.join(CUR_DIR, '..'))
+sys.path.append(ROOT_DIR)
 from benchmark.dataset_io import usbin_write, read_sparse_matrix
 
 if __name__ == "__main__":

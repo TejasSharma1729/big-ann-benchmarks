@@ -1,0 +1,7 @@
+sparse-1M:
+  type: sparse
+  params:
+    num_rows: 1000000
+    num_cols: 10000
+    density: 0.001
+    format: csr

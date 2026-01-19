@@ -1521,7 +1521,7 @@ movielens:
     run-groups:
       base:
         args: |
-             [{"k": "@count", "use_threading": true}]
+             [{"k": @count, "use_threading": true}]
         query-args: |
              [{"mode": "batch"}]
   double-group-testing:
@@ -1532,7 +1532,7 @@ movielens:
     run-groups:
       base:
         args: |
-             [{"k": "@count", "use_threading": true}]
+             [{"k": @count, "use_threading": true}]
         query-args: |
              [{"mode": "batch"}]
 
@@ -1589,7 +1589,7 @@ kddb:
     run-groups:
       base:
         args: |
-             [{"k": "@count", "use_threading": true}]
+             [{"k": @count, "use_threading": true}]
         query-args: |
              [{"mode": "batch"}]
   double-group-testing:
@@ -1600,7 +1600,7 @@ kddb:
     run-groups:
       base:
         args: |
-             [{"k": "@count", "use_threading": true}]
+             [{"k": @count, "use_threading": true}]
         query-args: |
              [{"mode": "batch"}]
 
@@ -1657,7 +1657,7 @@ avazu:
     run-groups:
       base:
         args: |
-             [{"k": "@count", "use_threading": true}]
+             [{"k": @count, "use_threading": true}]
         query-args: |
              [{"mode": "batch"}]
   double-group-testing:
@@ -1668,74 +1668,6 @@ avazu:
     run-groups:
       base:
         args: |
-             [{"k": "@count", "use_threading": true}]
-        query-args: |
-             [{"mode": "batch"}]
-
-sparse-1M:
-  nle:
-    docker-tag: null
-    module: benchmark.algorithms.nle
-    constructor: NLE
-    base-args: ["@metric"]
-    run-groups:
-      base:
-        args: |
-             [{}]
-        query-args: |
-             [{"budget": 100}, {"budget": 500}, {"budget": 1000}]
-  cufe:
-    docker-tag: null
-    module: benchmark.algorithms.nle
-    constructor: NLE
-    base-args: ["@metric"]
-    run-groups:
-      base:
-        args: |
-             [{}]
-        query-args: |
-             [{"budget": 100}, {"budget": 500}, {"budget": 1000}]
-  linscan:
-    docker-tag: null
-    module: benchmark.algorithms.nle
-    constructor: NLE
-    base-args: ["@metric"]
-    run-groups:
-      base:
-        args: |
-             [{}]
-        query-args: |
-             [{"budget": 100}, {"budget": 500}, {"budget": 1000}]
-  shnsw:
-    docker-tag: null
-    module: neurips23.sparse.shnsw.shnsw
-    constructor: SparseHNSW
-    base-args: ["@metric"]
-    run-groups:
-      base:
-        args: |
-             [{"efConstruction": 200, "M": 32, "buildthreads": -1}]
-        query-args: |
-             [{"efSearch": 100}, {"efSearch": 200}]
-  double-group-testing:
-    docker-tag: null
-    module: benchmark.algorithms.knns
-    constructor: KNNSDoubleGroupTesting
-    base-args: ["@metric"]
-    run-groups:
-      base:
-        args: |
-             [{"k": "@count", "use_threading": true}]
-        query-args: |
-             [{"mode": "batch"}]
-  binary-splitting:
-    docker-tag: null
-    module: benchmark.algorithms.knns
-    constructor: KNNSBinarySplitting
-    base-args: ["@metric"]
-    run-groups:
-      base:
-        args: |
-             [{"k": "@count", "use_threading": true}]
+             [{"k": @count, "use_threading": true}]
         query-args: |
              [{"mode": "batch"}]

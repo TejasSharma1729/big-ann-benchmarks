@@ -1,0 +1,84 @@
+avazu:
+  cufe: &id001
+    base-args:
+    - '@metric'
+    constructor: LinscanCUFE
+    docker-tag: null
+    module: neurips23.sparse.cufe.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 50}], [{"budget": 4000}]]'
+  knns_binary: &id002
+    base-args:
+    - '@metric'
+    constructor: KNNSBinarySplitting
+    docker-tag: null
+    module: benchmark.algorithms.knns
+    run-groups:
+      base:
+        args:
+        - k: '@count'
+          use_threading: true
+        query-args: '[[{"mode": "batch"}]]'
+  knns_double: &id003
+    base-args:
+    - '@metric'
+    constructor: KNNSDoubleGroupTesting
+    docker-tag: null
+    module: benchmark.algorithms.knns
+    run-groups:
+      base:
+        args:
+        - k: '@count'
+          use_threading: true
+        query-args: '[[{"mode": "batch"}]]'
+  linscan: &id004
+    base-args:
+    - '@metric'
+    constructor: Linscan
+    docker-tag: null
+    module: neurips23.sparse.linscan.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 50}], [{"budget": 4000}]]'
+  shnsw: &id005
+    base-args:
+    - '@metric'
+    constructor: SparseHNSW
+    docker-tag: null
+    module: neurips23.sparse.shnsw.shnsw
+    run-groups:
+      base:
+        args:
+        - M: 32
+          buildthreads: -1
+          efConstruction: 200
+        query-args: '[[{"efSearch": 40}], [{"efSearch": 500}]]'
+kddb:
+  cufe: *id001
+  knns_binary: *id002
+  knns_double: *id003
+  linscan: *id004
+  shnsw: *id005
+movielens:
+  cufe: *id001
+  knns_binary: *id002
+  knns_double: *id003
+  linscan: *id004
+  shnsw: *id005
+sparse-1M:
+  cufe: *id001
+  knns_binary: *id002
+  knns_double: *id003
+  linscan: *id004
+  shnsw: *id005
+sparse-full:
+  cufe: *id001
+  knns_binary: *id002
+  knns_double: *id003
+  linscan: *id004
+  shnsw: *id005

@@ -1,4 +1,6 @@
 import csv
+import os
+import subprocess
 import matplotlib as mpl
 mpl.use('Agg')  # noqa
 import matplotlib.pyplot as plt
@@ -14,7 +16,7 @@ from benchmark.plotting.metrics import all_metrics as metrics
 from benchmark.plotting.utils import (get_plot_label, compute_metrics,
         create_linestyles, create_pointset)
 from benchmark.results import (store_results, load_all_results,
-                            get_unique_algorithms)
+                            get_unique_algorithms, get_result_filename)
 
 
 
@@ -140,7 +142,7 @@ if __name__ == "__main__":
         '-Y', '--y-scale',
         help='Scale to use when drawing the Y-axis',
         choices=["linear", "log", "symlog", "logit"],
-        default='linear')
+        default='log')
     parser.add_argument(
         '--raw',
         help='Show raw results (not just Pareto frontier) in faded colours',
@@ -148,7 +150,8 @@ if __name__ == "__main__":
     parser.add_argument(
         '--recompute',
         help='Clears the cache and recomputes the metrics',
-        action='store_true')
+        action='store_true',
+        default=True)
     parser.add_argument(
         '--neurips23track',
         choices=['filter', 'ood', 'sparse', 'streaming', 'none'],
@@ -159,6 +162,25 @@ if __name__ == "__main__":
         help='Use the private queries and ground truth',
         action='store_true')
     args = parser.parse_args()
+
+    # FORCE RECOMPUTE
+    args.recompute = True
+    
+    # Run h5clear on all result files for this dataset to fix any lock issues
+    if not args.csv:
+        try:
+            dataset_result_dir = get_result_filename(args.dataset, args.count, neurips23track=args.neurips23track)
+            if os.path.exists(dataset_result_dir):
+                print(f"Scanning {dataset_result_dir} for locked .hdf5 files...")
+                for root, _, files in os.walk(dataset_result_dir):
+                    for fn in files:
+                        if fn.endswith('.hdf5'):
+                            filepath = os.path.join(root, fn)
+                            subprocess.run(['h5clear', '-s', filepath], check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except FileNotFoundError:
+             print("Warning: h5clear tool not found. Skipping file lock clearing.")
+        except Exception as e:
+             print(f"Warning: Failed to run h5clear: {e}")
 
     if not args.output:
         args.output = 'results/%s.png' % (args.dataset)
@@ -178,10 +200,10 @@ if __name__ == "__main__":
         results = load_all_results(args.dataset, count, neurips23track=args.neurips23track)
         if args.private_query:
             runs = compute_metrics(dataset.get_private_groundtruth(k=args.count),
-                                    results, args.x_axis, args.y_axis, args.recompute)
+                                    results, args.x_axis, args.y_axis, args.recompute, dataset=dataset)
         else:
             runs = compute_metrics(dataset.get_groundtruth(k=args.count),
-                                    results, args.x_axis, args.y_axis, args.recompute)
+                                    results, args.x_axis, args.y_axis, args.recompute, dataset=dataset)
     else:
         with open(args.csv) as csvfile:
             reader = csv.DictReader(csvfile)
@@ -210,3 +232,25 @@ if __name__ == "__main__":
     create_plot(runs, args.raw, args.x_scale,
                 args.y_scale, args.x_axis, args.y_axis, args.output,
                 linestyles)
+
+    # Output CSV of the plot data
+    base_output = os.path.splitext(args.output)[0]
+    csv_output = base_output + '.csv'
+    print('writing csv output to %s' % csv_output)
+    
+    with open(csv_output, 'w', newline='') as csvfile:
+        fieldnames = ['dataset', 'algorithm', 'parameters', args.x_axis, args.y_axis]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        
+        for algo, alg_runs in runs.items():
+            for run in alg_runs:
+                # run is (algo_key, parameters, x_metric, y_metric)
+                row = {
+                    'dataset': args.dataset,
+                    'algorithm': run[0],
+                    'parameters': run[1],
+                    args.x_axis: run[2],
+                    args.y_axis: run[3]
+                }
+                writer.writerow(row)

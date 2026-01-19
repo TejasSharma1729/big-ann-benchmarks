@@ -45,8 +45,12 @@ def create_pointset(data, xn, yn):
 
 
 def compute_metrics(true_nn, res, metric_1, metric_2,
-                    recompute=False):
+                    recompute=False, dataset=None):
     all_results = {}
+    
+    # Pre-cache dataset and queries if needed
+    data_cache = {}
+    
     for i, (properties, run) in enumerate(res):
         algo = properties['algo']
         algo_name = properties['name']
@@ -56,7 +60,68 @@ def compute_metrics(true_nn, res, metric_1, metric_2,
                     numpy.array(run['neighbors']),
                     numpy.array(run['distances']))
         else:
-            run_nn = numpy.array(run['neighbors'])
+             # Load distances if available for possible tie handling
+            if 'distances' in run:
+                run_nn = (numpy.array(run['neighbors']), numpy.array(run['distances']))
+            elif dataset is not None:
+                # Compute distances on the fly!
+                neighbors = numpy.array(run['neighbors'])
+                
+                if 'queries' not in data_cache:
+                    print("Loading dataset for distance computation...")
+                    data_cache['queries'] = dataset.get_queries()
+                    try:
+                        data_cache['dataset'] = dataset.get_dataset() # Assumes fits in memory
+                    except AssertionError:
+                        print("Dataset too large for standard loader, using direct sparse read...")
+                        from benchmark.dataset_io import read_sparse_matrix
+                        fn = dataset.get_dataset_fn()
+                        data_cache['dataset'] = read_sparse_matrix(fn, do_mmap=False)
+                
+                print(f"Computing distances for {algo_name}...")
+                X = data_cache['queries']
+                DB = data_cache['dataset']
+                
+                # Check for Sparse matrix vs Dense
+                is_sparse = hasattr(X, "dot") and hasattr(DB, "dot")
+                
+                n_queries, k = neighbors.shape
+                dists = numpy.zeros((n_queries, k), dtype='float32')
+                
+                # Batch processing to allow for some efficiency without full huge matrix mult
+                # But element-wise retrieval from sparse is slow.
+                # Optimized approach:
+                # For each query, we have k indices.
+                # db_vectors = DB[neighbors[i]] -> (k, d)
+                # query = X[i] -> (1, d)
+                # dot = query.dot(db_vectors.T)
+                
+                import tqdm
+                for q_idx in tqdm.tqdm(range(n_queries), desc="DistCalc", leave=False):
+                    q_vec = X[q_idx]
+                    n_idxs = neighbors[q_idx]
+                    
+                    # Safe retrieval for sparse
+                    # DB[n_idxs] works for CSR if n_idxs is sorted? No, standard indexing works but can be slow.
+                    # Actually standard CSR slicing by array is supported.
+                    
+                    vecs = DB[n_idxs]
+                    
+                    if is_sparse:
+                        # query is (1, d), vecs is (k, d).
+                        # vecs.T is (d, k)
+                        # result is (1, k)
+                        # .toarray() to get dense floats
+                        d_val = q_vec.dot(vecs.T).toarray().flatten()
+                    else:
+                        d_val = numpy.dot(vecs, q_vec) # Dense case might need shape check
+                        
+                    dists[q_idx] = d_val
+                
+                run_nn = (neighbors, dists)
+            else:
+                run_nn = numpy.array(run['neighbors'])
+            # run_nn = numpy.array(run['neighbors'])
         if recompute and 'metrics' in run:
             del run['metrics']
         metrics_cache = get_or_create_metrics(run)
@@ -95,7 +160,17 @@ def compute_metrics_all_runs(dataset, dataset_name, res, recompute=False,
         #traceback.print_exc()
         return
 
+    start_dist_calc_time = None
+    
+    import tqdm
+    # Cache for dataset vectors (queries and DB) to avoid reloading
+    # Note: Using a simple list [queries, dataset] to pass by reference efficiently
+    data_cache = {'queries': None, 'dataset': None}
+    
+    from benchmark.dataset_io import read_sparse_matrix
+    
     search_type = dataset.search_type()
+
     for i, (properties, run) in enumerate(res):
         algo = properties['algo']
         algo_name = properties['name']
@@ -108,7 +183,72 @@ def compute_metrics_all_runs(dataset, dataset_name, res, recompute=False,
                    run_nn_across_steps.append(numpy.array(run['neighbors_step' +  step_suffix]))
                    #true_nn_across_steps.append()
             else:
-                run_nn = numpy.array(run['neighbors'])
+                # Modified Logic: Check/Compute Distances
+                neighbors = numpy.array(run['neighbors'])
+                print(f"DEBUG: Processing run. Distances key present: {'distances' in run}")
+                
+                if 'distances' in run:
+                    dists = numpy.array(run['distances'])
+                    run_nn = (neighbors, dists)
+                else:
+                    # Compute distances on the fly if missing
+                    # We need the dataset object from the *outer* scope 'dataset' (variable name conflict with property!)
+                    # The function arg is 'dataset'. The property 'dataset' is a string.
+                    # Let's use the function argument `dataset` (the object).
+                    
+                    if data_cache['queries'] is None:
+                        print("Loading queries for retroactive distance computation...")
+                        data_cache['queries'] = dataset.get_queries()
+                        
+                        # Load Dataset (Handle Large Sparse Matrix)
+                        try:
+                            data_cache['dataset'] = dataset.get_dataset()
+                        except AssertionError:
+                             # Dataset too large standard check (likely sparse-full)
+                             print("Dataset too large for standard get_dataset(). Attempting direct sparse load...")
+                             if hasattr(dataset, 'get_dataset_fn'):
+                                 try:
+                                     fn = dataset.get_dataset_fn()
+                                     print(f"Directly loading sparse matrix from {fn}...")
+                                     # Force load without size assertion, assuming valid CSR
+                                     # do_mmap=False to load into RAM (we have 250GB)
+                                     # do_mmap=True if we want to rely on OS paging
+                                     # Given the sparse dot product optimization, access pattern is random. RAM is better.
+                                     data_cache['dataset'] = read_sparse_matrix(fn, do_mmap=False) 
+                                 except Exception as e:
+                                     print(f"Failed to load large dataset: {e}")
+                                     data_cache['dataset'] = False
+                             else:
+                                 print("No get_dataset_fn(), skipping distance calc.")
+                                 data_cache['dataset'] = False
+                        except Exception as e:
+                            print(f"Unexpected error loading dataset: {e}")
+                            data_cache['dataset'] = False
+
+                    if data_cache['dataset'] is not False and data_cache['queries'] is not None:
+                         X = data_cache['queries']
+                         DB = data_cache['dataset']
+                         is_sparse = hasattr(X, "dot") and hasattr(DB, "dot")
+                         
+                         n_queries, k = neighbors.shape
+                         dists = numpy.zeros((n_queries, k), dtype='float32')
+                         
+                         # print(f"Computing distances for {algo_name}...")
+                         for q_idx in range(n_queries):
+                            q_vec = X[q_idx]
+                            n_idxs = neighbors[q_idx]
+                            vecs = DB[n_idxs]
+                            
+                            if is_sparse:
+                                d_val = q_vec.dot(vecs.T).toarray().flatten()
+                            else:
+                                d_val = numpy.dot(vecs, q_vec)
+                            dists[q_idx] = d_val
+                            
+                         run_nn = (neighbors, dists)
+                    else:
+                         run_nn = neighbors
+
         elif search_type == "range":
             if neurips23track == 'streaming':
                 run_nn_across_steps = []
