@@ -4,7 +4,7 @@ import sys
 
 # Configuration
 # Datasets requested by user
-datasets = ['movielens']
+datasets = ['sparse-1M', 'sparse-full', 'movielens', 'kddb', 'avazu']
 
 # Algorithms to run
 # Note: 'nle', 'cufe', 'linscan' map to the same underlying implementation in --nodocker mode 

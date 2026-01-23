@@ -165,7 +165,7 @@ def install_avazu(base_dir):
     print("Splitting data...")
     # First 10000 rows into Q, rest into X
     Q = X_all[:10000]
-    X = X_all[10000:]
+    X = X_all[10000:10010000]
     
     print("Writing files...")
     save_custom_csr(X, os.path.join(av_dir, "X.csr"))

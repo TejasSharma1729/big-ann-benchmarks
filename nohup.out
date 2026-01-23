@@ -1,346 +1,0 @@
-Generated algos-all-variants.yaml
-2026-01-19 02:38:27,740 - annb - INFO - running only linscan
-2026-01-19 02:38:27,740 - annb - INFO - Order: [Definition(algorithm='linscan', constructor='Linscan', module='neurips23.sparse.linscan.linscan', docker_tag=None, docker_volumes=[], arguments=['ip', {}], query_argument_groups=[[{'budget': 50}], [{'budget': 4000}]], disabled=False)]
-RW Namespace(dataset='movielens', dataset_path=None, count=10, definitions='algos-all-variants.yaml', algorithm='linscan', docker_tag=None, list_algorithms=False, force=False, rebuild=False, runs=5, timeout=43200, max_n_algorithms=-1, power_capture='', t3=False, nodocker=True, upload_index=False, download_index=False, blob_prefix=None, sas_string=None, private_query=False, neurips23track='none', runbook_path='neurips23/streaming/simple_runbook.yaml')
-['ip', {}]
-Trying to instantiate neurips23.sparse.linscan.linscan.Linscan(['ip', {}])
-Initializing a new LinscanIndex.
-Linscan index initialized: Linscan Index [0 documents, 0 unique tokens, avg. nnz: NaN]
-Running linscan on movielens
-Index status: Linscan Index [1000000 documents, 850023 unique tokens, avg. nnz: 598.18286]
-Built index in 160.12920141220093
-Index memory footprint:  6058480.0
-Starting query
-Running query argument group 1 of 2...
-Got 10000 queries
-Run 1/5...
-Run 2/5...
-Run 3/5...
-Run 4/5...
-Run 5/5...
-start store results
-end store results
-Running query argument group 2 of 2...
-Got 10000 queries
-Run 1/5...
-Run 2/5...
-Run 3/5...
-Run 4/5...
-Run 5/5...
-start store results
-end store results
-2026-01-19 02:43:03,742 - annb - INFO - running only cufe
-2026-01-19 02:43:03,742 - annb - INFO - Order: [Definition(algorithm='cufe', constructor='LinscanCUFE', module='neurips23.sparse.cufe.linscan', docker_tag=None, docker_volumes=[], arguments=['ip', {}], query_argument_groups=[[{'budget': 50}], [{'budget': 4000}]], disabled=False)]
-RW Namespace(dataset='movielens', dataset_path=None, count=10, definitions='algos-all-variants.yaml', algorithm='cufe', docker_tag=None, list_algorithms=False, force=False, rebuild=False, runs=5, timeout=43200, max_n_algorithms=-1, power_capture='', t3=False, nodocker=True, upload_index=False, download_index=False, blob_prefix=None, sas_string=None, private_query=False, neurips23track='none', runbook_path='neurips23/streaming/simple_runbook.yaml')
-['ip', {}]
-Trying to instantiate neurips23.sparse.cufe.linscan.LinscanCUFE(['ip', {}])
-Initializing a new LinscanIndex.
-Linscan index initialized: CUFE Linscan Index
-Running cufe on movielens
-Index status: CUFE Linscan Index
-Built index in 161.31698751449585
-Index memory footprint:  3876008.0
-Starting query
-Running query argument group 1 of 2...
-Got 10000 queries
-Run 1/5...
-Run 2/5...
-Run 3/5...
-Run 4/5...
-Run 5/5...
-start store results
-end store results
-Running query argument group 2 of 2...
-Got 10000 queries
-Run 1/5...
-Run 2/5...
-Run 3/5...
-Run 4/5...
-Run 5/5...
-start store results
-end store results
-2026-01-19 02:47:13,494 - annb - INFO - running only nle
-Traceback (most recent call last):
-  File "/home/tejassharma/big-ann-benchmarks/run.py", line 6, in <module>
-    main()
-  File "/home/tejassharma/big-ann-benchmarks/benchmark/main.py", line 265, in main
-    raise Exception('Nothing to run')
-Exception: Nothing to run
-2026-01-19 02:47:14,342 - annb - INFO - running only shnsw
-2026-01-19 02:47:14,343 - annb - INFO - Order: [Definition(algorithm='shnsw', constructor='SparseHNSW', module='neurips23.sparse.shnsw.shnsw', docker_tag=None, docker_volumes=[], arguments=['ip', {'M': 32, 'buildthreads': -1, 'efConstruction': 200}], query_argument_groups=[[{'efSearch': 40}], [{'efSearch': 500}]], disabled=False)]
-RW Namespace(dataset='movielens', dataset_path=None, count=10, definitions='algos-all-variants.yaml', algorithm='shnsw', docker_tag=None, list_algorithms=False, force=False, rebuild=False, runs=5, timeout=43200, max_n_algorithms=-1, power_capture='', t3=False, nodocker=True, upload_index=False, download_index=False, blob_prefix=None, sas_string=None, private_query=False, neurips23track='none', runbook_path='neurips23/streaming/simple_runbook.yaml')
-['ip', {'M': 32, 'buildthreads': -1, 'efConstruction': 200}]
-Trying to instantiate neurips23.sparse.shnsw.shnsw.SparseHNSW(['ip', {'M': 32, 'buildthreads': -1, 'efConstruction': 200}])
-Running shnsw on movielens
-begin load
-begin fit
-Built index in 4657.865102529526
-Index memory footprint:  5155140.0
-Starting query
-Running query argument group 1 of 2...
-开始 set
-Got 10000 queries
-Run 1/5...
-Run 2/5...
-Run 3/5...
-Run 4/5...
-Run 5/5...
-start store results
-end store results
-Running query argument group 2 of 2...
-开始 set
-Got 10000 queries
-Run 1/5...
-Run 2/5...
-Run 3/5...
-Run 4/5...
-Run 5/5...
-start store results
-end store results
-2026-01-19 04:06:58,064 - annb - INFO - running only binary-splitting
-Traceback (most recent call last):
-  File "/home/tejassharma/big-ann-benchmarks/run.py", line 6, in <module>
-    main()
-  File "/home/tejassharma/big-ann-benchmarks/benchmark/main.py", line 265, in main
-    raise Exception('Nothing to run')
-Exception: Nothing to run
-2026-01-19 04:06:58,904 - annb - INFO - running only double-group-testing
-Traceback (most recent call last):
-  File "/home/tejassharma/big-ann-benchmarks/run.py", line 6, in <module>
-    main()
-  File "/home/tejassharma/big-ann-benchmarks/benchmark/main.py", line 265, in main
-    raise Exception('Nothing to run')
-Exception: Nothing to run
-Scanning results/movielens/10 for locked .hdf5 files...
-Read error on ip_budget_50.hdf5: [Errno 11] Unable to synchronously open file (unable to lock file, errno = 11, error message = 'Resource temporarily unavailable'). Attempting h5clear -s...
-WARNING: Skipping locked or corrupt file ip_budget_50.hdf5 (Recovery failed: Command '['h5clear', '-s', 'results/kddb/10/cufe/ip_budget_50.hdf5']' returned non-zero exit status 1.)
-Loading dataset for distance computation...
-Computing distances for linscan...
-DistCalc:   0%|          | 0/10000 [00:00<?, ?it/s]DistCalc:   1%|          | 105/10000 [00:00<00:09, 1042.54it/s]DistCalc:   2%|▏         | 214/10000 [00:00<00:09, 1068.30it/s]DistCalc:   3%|▎         | 325/10000 [00:00<00:08, 1083.60it/s]DistCalc:   4%|▍         | 435/10000 [00:00<00:08, 1086.98it/s]DistCalc:   5%|▌         | 545/10000 [00:00<00:08, 1089.62it/s]DistCalc:   7%|▋         | 654/10000 [00:00<00:08, 1089.61it/s]DistCalc:   8%|▊         | 764/10000 [00:00<00:08, 1090.86it/s]DistCalc:   9%|▉         | 875/10000 [00:00<00:08, 1096.47it/s]DistCalc:  10%|▉         | 985/10000 [00:00<00:08, 1097.30it/s]DistCalc:  11%|█         | 1097/10000 [00:01<00:08, 1103.35it/s]DistCalc:  12%|█▏        | 1210/10000 [00:01<00:07, 1109.86it/s]DistCalc:  13%|█▎        | 1321/10000 [00:01<00:07, 1107.84it/s]DistCalc:  14%|█▍        | 1432/10000 [00:01<00:07, 1099.32it/s]DistCalc:  15%|█▌        | 1544/10000 [00:01<00:07, 1104.21it/s]DistCalc:  17%|█▋        | 1657/10000 [00:01<00:07, 1111.92it/s]DistCalc:  18%|█▊        | 1769/10000 [00:01<00:07, 1110.14it/s]DistCalc:  19%|█▉        | 1881/10000 [00:01<00:07, 1104.31it/s]DistCalc:  20%|█▉        | 1996/10000 [00:01<00:07, 1115.16it/s]DistCalc:  21%|██        | 2108/10000 [00:01<00:07, 1114.53it/s]DistCalc:  22%|██▏       | 2221/10000 [00:02<00:06, 1118.92it/s]DistCalc:  23%|██▎       | 2333/10000 [00:02<00:06, 1115.25it/s]DistCalc:  24%|██▍       | 2445/10000 [00:02<00:06, 1114.68it/s]DistCalc:  26%|██▌       | 2558/10000 [00:02<00:06, 1119.01it/s]DistCalc:  27%|██▋       | 2671/10000 [00:02<00:06, 1120.13it/s]DistCalc:  28%|██▊       | 2784/10000 [00:02<00:06, 1107.41it/s]DistCalc:  29%|██▉       | 2897/10000 [00:02<00:06, 1112.50it/s]DistCalc:  30%|███       | 3012/10000 [00:02<00:06, 1122.99it/s]DistCalc:  31%|███▏      | 3126/10000 [00:02<00:06, 1125.83it/s]DistCalc:  32%|███▏      | 3241/10000 [00:02<00:05, 1130.74it/s]DistCalc:  34%|███▎      | 3355/10000 [00:03<00:05, 1123.80it/s]DistCalc:  35%|███▍      | 3469/10000 [00:03<00:05, 1127.86it/s]DistCalc:  36%|███▌      | 3582/10000 [00:03<00:05, 1127.29it/s]DistCalc:  37%|███▋      | 3697/10000 [00:03<00:05, 1133.64it/s]DistCalc:  38%|███▊      | 3812/10000 [00:03<00:05, 1137.70it/s]DistCalc:  39%|███▉      | 3927/10000 [00:03<00:05, 1139.36it/s]DistCalc:  40%|████      | 4041/10000 [00:03<00:05, 1138.75it/s]DistCalc:  42%|████▏     | 4156/10000 [00:03<00:05, 1141.86it/s]DistCalc:  43%|████▎     | 4278/10000 [00:03<00:04, 1162.75it/s]DistCalc:  44%|████▍     | 4399/10000 [00:03<00:04, 1175.13it/s]DistCalc:  45%|████▌     | 4518/10000 [00:04<00:04, 1177.42it/s]DistCalc:  46%|████▋     | 4640/10000 [00:04<00:04, 1187.46it/s]DistCalc:  48%|████▊     | 4763/10000 [00:04<00:04, 1199.30it/s]DistCalc:  49%|████▉     | 4884/10000 [00:04<00:04, 1199.88it/s]DistCalc:  50%|█████     | 5007/10000 [00:04<00:04, 1206.95it/s]DistCalc:  51%|█████▏    | 5130/10000 [00:04<00:04, 1213.00it/s]DistCalc:  53%|█████▎    | 5253/10000 [00:04<00:03, 1215.49it/s]DistCalc:  54%|█████▍    | 5375/10000 [00:04<00:03, 1215.64it/s]DistCalc:  55%|█████▍    | 5497/10000 [00:04<00:03, 1210.80it/s]DistCalc:  56%|█████▌    | 5619/10000 [00:04<00:03, 1194.83it/s]DistCalc:  57%|█████▋    | 5739/10000 [00:05<00:03, 1182.64it/s]DistCalc:  59%|█████▊    | 5858/10000 [00:05<00:03, 1170.27it/s]DistCalc:  60%|█████▉    | 5976/10000 [00:05<00:03, 1165.03it/s]DistCalc:  61%|██████    | 6093/10000 [00:05<00:03, 1161.73it/s]DistCalc:  62%|██████▏   | 6210/10000 [00:05<00:03, 1160.38it/s]DistCalc:  63%|██████▎   | 6327/10000 [00:05<00:03, 1162.19it/s]DistCalc:  64%|██████▍   | 6444/10000 [00:05<00:03, 1159.91it/s]DistCalc:  66%|██████▌   | 6561/10000 [00:05<00:02, 1161.14it/s]DistCalc:  67%|██████▋   | 6678/10000 [00:05<00:02, 1158.54it/s]DistCalc:  68%|██████▊   | 6795/10000 [00:05<00:02, 1159.53it/s]DistCalc:  69%|██████▉   | 6913/10000 [00:06<00:02, 1164.51it/s]DistCalc:  70%|███████   | 7033/10000 [00:06<00:02, 1173.70it/s]DistCalc:  72%|███████▏  | 7153/10000 [00:06<00:02, 1178.77it/s]DistCalc:  73%|███████▎  | 7271/10000 [00:06<00:02, 1176.85it/s]DistCalc:  74%|███████▍  | 7390/10000 [00:06<00:02, 1178.12it/s]DistCalc:  75%|███████▌  | 7509/10000 [00:06<00:02, 1179.99it/s]DistCalc:  76%|███████▋  | 7628/10000 [00:06<00:02, 1180.26it/s]DistCalc:  77%|███████▋  | 7747/10000 [00:06<00:01, 1181.94it/s]DistCalc:  79%|███████▊  | 7866/10000 [00:06<00:01, 1184.33it/s]DistCalc:  80%|███████▉  | 7986/10000 [00:06<00:01, 1187.35it/s]DistCalc:  81%|████████  | 8107/10000 [00:07<00:01, 1192.40it/s]DistCalc:  82%|████████▏ | 8227/10000 [00:07<00:01, 1194.46it/s]DistCalc:  83%|████████▎ | 8348/10000 [00:07<00:01, 1196.84it/s]DistCalc:  85%|████████▍ | 8471/10000 [00:07<00:01, 1203.82it/s]DistCalc:  86%|████████▌ | 8594/10000 [00:07<00:01, 1208.68it/s]DistCalc:  87%|████████▋ | 8717/10000 [00:07<00:01, 1213.02it/s]DistCalc:  88%|████████▊ | 8841/10000 [00:07<00:00, 1218.25it/s]DistCalc:  90%|████████▉ | 8964/10000 [00:07<00:00, 1218.98it/s]DistCalc:  91%|█████████ | 9088/10000 [00:07<00:00, 1222.79it/s]DistCalc:  92%|█████████▏| 9212/10000 [00:07<00:00, 1224.85it/s]DistCalc:  93%|█████████▎| 9336/10000 [00:08<00:00, 1226.75it/s]DistCalc:  95%|█████████▍| 9459/10000 [00:08<00:00, 1227.60it/s]DistCalc:  96%|█████████▌| 9582/10000 [00:08<00:00, 1226.14it/s]DistCalc:  97%|█████████▋| 9705/10000 [00:08<00:00, 1226.01it/s]DistCalc:  98%|█████████▊| 9828/10000 [00:08<00:00, 1223.25it/s]DistCalc: 100%|█████████▉| 9952/10000 [00:08<00:00, 1226.72it/s]                                                                Computing knn metrics
-Warning: 10000/2 queries contained ties accounted for in recall
-  0:                                                                          linscan        0.799     1179.680
-Computing distances for linscan...
-DistCalc:   0%|          | 0/10000 [00:00<?, ?it/s]DistCalc:   1%|          | 110/10000 [00:00<00:09, 1092.06it/s]DistCalc:   2%|▏         | 221/10000 [00:00<00:08, 1102.12it/s]DistCalc:   3%|▎         | 334/10000 [00:00<00:08, 1110.46it/s]DistCalc:   4%|▍         | 446/10000 [00:00<00:08, 1112.35it/s]DistCalc:   6%|▌         | 558/10000 [00:00<00:08, 1111.03it/s]DistCalc:   7%|▋         | 670/10000 [00:00<00:08, 1110.07it/s]DistCalc:   8%|▊         | 782/10000 [00:00<00:08, 1111.00it/s]DistCalc:   9%|▉         | 894/10000 [00:00<00:08, 1112.90it/s]DistCalc:  10%|█         | 1006/10000 [00:00<00:08, 1110.29it/s]DistCalc:  11%|█         | 1118/10000 [00:01<00:08, 1106.33it/s]DistCalc:  12%|█▏        | 1230/10000 [00:01<00:07, 1107.76it/s]DistCalc:  13%|█▎        | 1342/10000 [00:01<00:07, 1108.92it/s]DistCalc:  15%|█▍        | 1453/10000 [00:01<00:07, 1108.57it/s]DistCalc:  16%|█▌        | 1566/10000 [00:01<00:07, 1113.28it/s]DistCalc:  17%|█▋        | 1678/10000 [00:01<00:07, 1113.94it/s]DistCalc:  18%|█▊        | 1791/10000 [00:01<00:07, 1116.13it/s]DistCalc:  19%|█▉        | 1903/10000 [00:01<00:07, 1113.86it/s]DistCalc:  20%|██        | 2016/10000 [00:01<00:07, 1117.71it/s]DistCalc:  21%|██▏       | 2129/10000 [00:01<00:07, 1118.63it/s]DistCalc:  22%|██▏       | 2241/10000 [00:02<00:06, 1117.06it/s]DistCalc:  24%|██▎       | 2353/10000 [00:02<00:06, 1116.09it/s]DistCalc:  25%|██▍       | 2466/10000 [00:02<00:06, 1118.97it/s]DistCalc:  26%|██▌       | 2579/10000 [00:02<00:06, 1121.40it/s]DistCalc:  27%|██▋       | 2692/10000 [00:02<00:06, 1119.65it/s]DistCalc:  28%|██▊       | 2804/10000 [00:02<00:06, 1118.46it/s]DistCalc:  29%|██▉       | 2916/10000 [00:02<00:06, 1118.46it/s]DistCalc:  30%|███       | 3031/10000 [00:02<00:06, 1125.66it/s]DistCalc:  31%|███▏      | 3145/10000 [00:02<00:06, 1128.21it/s]DistCalc:  33%|███▎      | 3259/10000 [00:02<00:05, 1131.57it/s]DistCalc:  34%|███▎      | 3373/10000 [00:03<00:05, 1131.41it/s]DistCalc:  35%|███▍      | 3487/10000 [00:03<00:05, 1131.00it/s]DistCalc:  36%|███▌      | 3601/10000 [00:03<00:05, 1133.49it/s]DistCalc:  37%|███▋      | 3715/10000 [00:03<00:05, 1133.81it/s]DistCalc:  38%|███▊      | 3831/10000 [00:03<00:05, 1140.88it/s]DistCalc:  39%|███▉      | 3946/10000 [00:03<00:05, 1139.30it/s]DistCalc:  41%|████      | 4062/10000 [00:03<00:05, 1143.13it/s]DistCalc:  42%|████▏     | 4180/10000 [00:03<00:05, 1151.59it/s]DistCalc:  43%|████▎     | 4304/10000 [00:03<00:04, 1175.29it/s]DistCalc:  44%|████▍     | 4428/10000 [00:03<00:04, 1192.22it/s]DistCalc:  46%|████▌     | 4552/10000 [00:04<00:04, 1203.57it/s]DistCalc:  47%|████▋     | 4676/10000 [00:04<00:04, 1213.24it/s]DistCalc:  48%|████▊     | 4798/10000 [00:04<00:04, 1215.10it/s]DistCalc:  49%|████▉     | 4922/10000 [00:04<00:04, 1222.50it/s]DistCalc:  50%|█████     | 5046/10000 [00:04<00:04, 1226.17it/s]DistCalc:  52%|█████▏    | 5169/10000 [00:04<00:03, 1224.21it/s]DistCalc:  53%|█████▎    | 5294/10000 [00:04<00:03, 1229.02it/s]DistCalc:  54%|█████▍    | 5417/10000 [00:04<00:03, 1227.57it/s]DistCalc:  55%|█████▌    | 5541/10000 [00:04<00:03, 1229.34it/s]DistCalc:  57%|█████▋    | 5664/10000 [00:04<00:03, 1205.84it/s]DistCalc:  58%|█████▊    | 5785/10000 [00:05<00:03, 1193.18it/s]DistCalc:  59%|█████▉    | 5905/10000 [00:05<00:03, 1180.20it/s]DistCalc:  60%|██████    | 6024/10000 [00:05<00:03, 1172.26it/s]DistCalc:  61%|██████▏   | 6142/10000 [00:05<00:03, 1166.30it/s]DistCalc:  63%|██████▎   | 6259/10000 [00:05<00:03, 1162.09it/s]DistCalc:  64%|██████▍   | 6376/10000 [00:05<00:03, 1160.27it/s]DistCalc:  65%|██████▍   | 6493/10000 [00:05<00:03, 1157.58it/s]DistCalc:  66%|██████▌   | 6609/10000 [00:05<00:02, 1156.73it/s]DistCalc:  67%|██████▋   | 6725/10000 [00:05<00:02, 1157.54it/s]DistCalc:  68%|██████▊   | 6842/10000 [00:05<00:02, 1158.49it/s]DistCalc:  70%|██████▉   | 6961/10000 [00:06<00:02, 1167.56it/s]DistCalc:  71%|███████   | 7078/10000 [00:06<00:02, 1162.25it/s]DistCalc:  72%|███████▏  | 7196/10000 [00:06<00:02, 1167.53it/s]DistCalc:  73%|███████▎  | 7315/10000 [00:06<00:02, 1172.01it/s]DistCalc:  74%|███████▍  | 7435/10000 [00:06<00:02, 1178.20it/s]DistCalc:  76%|███████▌  | 7555/10000 [00:06<00:02, 1182.39it/s]DistCalc:  77%|███████▋  | 7674/10000 [00:06<00:01, 1183.34it/s]DistCalc:  78%|███████▊  | 7794/10000 [00:06<00:01, 1185.36it/s]DistCalc:  79%|███████▉  | 7913/10000 [00:06<00:01, 1184.08it/s]DistCalc:  80%|████████  | 8032/10000 [00:06<00:01, 1182.50it/s]DistCalc:  82%|████████▏ | 8151/10000 [00:07<00:01, 1184.12it/s]DistCalc:  83%|████████▎ | 8271/10000 [00:07<00:01, 1187.07it/s]DistCalc:  84%|████████▍ | 8393/10000 [00:07<00:01, 1195.24it/s]DistCalc:  85%|████████▌ | 8515/10000 [00:07<00:01, 1202.30it/s]DistCalc:  86%|████████▋ | 8638/10000 [00:07<00:01, 1208.83it/s]DistCalc:  88%|████████▊ | 8759/10000 [00:07<00:01, 1208.51it/s]DistCalc:  89%|████████▉ | 8880/10000 [00:07<00:00, 1208.65it/s]DistCalc:  90%|█████████ | 9002/10000 [00:07<00:00, 1209.29it/s]DistCalc:  91%|█████████ | 9124/10000 [00:07<00:00, 1212.34it/s]DistCalc:  92%|█████████▏| 9247/10000 [00:07<00:00, 1215.40it/s]DistCalc:  94%|█████████▎| 9369/10000 [00:08<00:00, 1203.45it/s]DistCalc:  95%|█████████▍| 9491/10000 [00:08<00:00, 1207.31it/s]DistCalc:  96%|█████████▌| 9612/10000 [00:08<00:00, 1206.76it/s]DistCalc:  97%|█████████▋| 9734/10000 [00:08<00:00, 1209.53it/s]DistCalc:  99%|█████████▊| 9856/10000 [00:08<00:00, 1211.39it/s]DistCalc: 100%|█████████▉| 9980/10000 [00:08<00:00, 1219.88it/s]                                                                Computing knn metrics
-Warning: 10000/2 queries contained ties accounted for in recall
-  1:                                                                          linscan        1.000      705.308
-Computing distances for cufe_linscan...
-DistCalc:   0%|          | 0/10000 [00:00<?, ?it/s]DistCalc:   1%|          | 116/10000 [00:00<00:08, 1154.29it/s]DistCalc:   2%|▏         | 232/10000 [00:00<00:08, 1155.67it/s]DistCalc:   4%|▎         | 350/10000 [00:00<00:08, 1162.52it/s]DistCalc:   5%|▍         | 467/10000 [00:00<00:08, 1164.28it/s]DistCalc:   6%|▌         | 584/10000 [00:00<00:08, 1161.81it/s]DistCalc:   7%|▋         | 701/10000 [00:00<00:07, 1164.21it/s]DistCalc:   8%|▊         | 819/10000 [00:00<00:07, 1166.32it/s]DistCalc:   9%|▉         | 936/10000 [00:00<00:07, 1166.35it/s]DistCalc:  11%|█         | 1053/10000 [00:00<00:07, 1165.08it/s]DistCalc:  12%|█▏        | 1170/10000 [00:01<00:07, 1164.62it/s]DistCalc:  13%|█▎        | 1287/10000 [00:01<00:07, 1163.24it/s]DistCalc:  14%|█▍        | 1404/10000 [00:01<00:07, 1160.95it/s]DistCalc:  15%|█▌        | 1522/10000 [00:01<00:07, 1164.01it/s]DistCalc:  16%|█▋        | 1639/10000 [00:01<00:07, 1165.01it/s]DistCalc:  18%|█▊        | 1756/10000 [00:01<00:07, 1164.30it/s]DistCalc:  19%|█▊        | 1873/10000 [00:01<00:06, 1164.92it/s]DistCalc:  20%|█▉        | 1990/10000 [00:01<00:06, 1166.01it/s]DistCalc:  21%|██        | 2107/10000 [00:01<00:06, 1164.03it/s]DistCalc:  22%|██▏       | 2224/10000 [00:01<00:06, 1165.20it/s]DistCalc:  23%|██▎       | 2341/10000 [00:02<00:06, 1162.27it/s]DistCalc:  25%|██▍       | 2458/10000 [00:02<00:06, 1164.34it/s]DistCalc:  26%|██▌       | 2575/10000 [00:02<00:06, 1164.94it/s]DistCalc:  27%|██▋       | 2692/10000 [00:02<00:06, 1165.34it/s]DistCalc:  28%|██▊       | 2810/10000 [00:02<00:06, 1167.17it/s]DistCalc:  29%|██▉       | 2929/10000 [00:02<00:06, 1171.11it/s]DistCalc:  30%|███       | 3048/10000 [00:02<00:05, 1173.88it/s]DistCalc:  32%|███▏      | 3166/10000 [00:02<00:05, 1175.10it/s]DistCalc:  33%|███▎      | 3284/10000 [00:02<00:05, 1175.18it/s]DistCalc:  34%|███▍      | 3403/10000 [00:02<00:05, 1178.37it/s]DistCalc:  35%|███▌      | 3522/10000 [00:03<00:05, 1180.45it/s]DistCalc:  36%|███▋      | 3641/10000 [00:03<00:05, 1182.14it/s]DistCalc:  38%|███▊      | 3760/10000 [00:03<00:05, 1182.46it/s]DistCalc:  39%|███▉      | 3879/10000 [00:03<00:05, 1184.51it/s]DistCalc:  40%|███▉      | 3998/10000 [00:03<00:05, 1186.11it/s]DistCalc:  41%|████      | 4117/10000 [00:03<00:04, 1186.00it/s]DistCalc:  42%|████▏     | 4242/10000 [00:03<00:04, 1204.05it/s]DistCalc:  44%|████▎     | 4369/10000 [00:03<00:04, 1223.09it/s]DistCalc:  45%|████▍     | 4496/10000 [00:03<00:04, 1235.50it/s]DistCalc:  46%|████▌     | 4623/10000 [00:03<00:04, 1244.87it/s]DistCalc:  48%|████▊     | 4750/10000 [00:04<00:04, 1251.48it/s]DistCalc:  49%|████▉     | 4876/10000 [00:04<00:04, 1253.13it/s]DistCalc:  50%|█████     | 5002/10000 [00:04<00:03, 1254.43it/s]DistCalc:  51%|█████▏    | 5129/10000 [00:04<00:03, 1258.40it/s]DistCalc:  53%|█████▎    | 5255/10000 [00:04<00:03, 1253.30it/s]DistCalc:  54%|█████▍    | 5381/10000 [00:04<00:03, 1253.56it/s]DistCalc:  55%|█████▌    | 5508/10000 [00:04<00:03, 1256.94it/s]DistCalc:  56%|█████▋    | 5634/10000 [00:04<00:03, 1243.40it/s]DistCalc:  58%|█████▊    | 5759/10000 [00:04<00:03, 1226.25it/s]DistCalc:  59%|█████▉    | 5882/10000 [00:04<00:03, 1218.83it/s]DistCalc:  60%|██████    | 6004/10000 [00:05<00:03, 1209.55it/s]DistCalc:  61%|██████▏   | 6125/10000 [00:05<00:03, 1203.03it/s]DistCalc:  62%|██████▏   | 6246/10000 [00:05<00:03, 1191.72it/s]DistCalc:  64%|██████▎   | 6366/10000 [00:05<00:03, 1191.56it/s]DistCalc:  65%|██████▍   | 6486/10000 [00:05<00:02, 1192.44it/s]DistCalc:  66%|██████▌   | 6606/10000 [00:05<00:02, 1188.97it/s]DistCalc:  67%|██████▋   | 6726/10000 [00:05<00:02, 1191.90it/s]DistCalc:  68%|██████▊   | 6846/10000 [00:05<00:02, 1193.07it/s]DistCalc:  70%|██████▉   | 6968/10000 [00:05<00:02, 1200.52it/s]DistCalc:  71%|███████   | 7091/10000 [00:05<00:02, 1208.76it/s]DistCalc:  72%|███████▏  | 7214/10000 [00:06<00:02, 1213.80it/s]DistCalc:  73%|███████▎  | 7337/10000 [00:06<00:02, 1216.26it/s]DistCalc:  75%|███████▍  | 7461/10000 [00:06<00:02, 1221.29it/s]DistCalc:  76%|███████▌  | 7585/10000 [00:06<00:01, 1225.17it/s]DistCalc:  77%|███████▋  | 7708/10000 [00:06<00:01, 1223.27it/s]DistCalc:  78%|███████▊  | 7831/10000 [00:06<00:01, 1222.11it/s]DistCalc:  80%|███████▉  | 7954/10000 [00:06<00:01, 1218.86it/s]DistCalc:  81%|████████  | 8077/10000 [00:06<00:01, 1220.92it/s]DistCalc:  82%|████████▏ | 8200/10000 [00:06<00:01, 1218.66it/s]DistCalc:  83%|████████▎ | 8325/10000 [00:06<00:01, 1225.28it/s]DistCalc:  85%|████████▍ | 8451/10000 [00:07<00:01, 1233.73it/s]DistCalc:  86%|████████▌ | 8577/10000 [00:07<00:01, 1239.09it/s]DistCalc:  87%|████████▋ | 8704/10000 [00:07<00:01, 1245.37it/s]DistCalc:  88%|████████▊ | 8830/10000 [00:07<00:00, 1248.05it/s]DistCalc:  90%|████████▉ | 8956/10000 [00:07<00:00, 1250.68it/s]DistCalc:  91%|█████████ | 9082/10000 [00:07<00:00, 1245.55it/s]DistCalc:  92%|█████████▏| 9207/10000 [00:07<00:00, 1245.11it/s]DistCalc:  93%|█████████▎| 9333/10000 [00:07<00:00, 1248.80it/s]DistCalc:  95%|█████████▍| 9459/10000 [00:07<00:00, 1251.23it/s]DistCalc:  96%|█████████▌| 9586/10000 [00:07<00:00, 1253.96it/s]DistCalc:  97%|█████████▋| 9713/10000 [00:08<00:00, 1258.33it/s]DistCalc:  98%|█████████▊| 9839/10000 [00:08<00:00, 1255.51it/s]DistCalc: 100%|█████████▉| 9965/10000 [00:08<00:00, 1251.50it/s]                                                                Computing knn metrics
-Warning: 10000/2 queries contained ties accounted for in recall
-  2:                                                                     cufe_linscan        0.082     1309.238
-Computing distances for cufe_linscan...
-DistCalc:   0%|          | 0/10000 [00:00<?, ?it/s]DistCalc:   1%|          | 118/10000 [00:00<00:08, 1171.66it/s]DistCalc:   2%|▏         | 236/10000 [00:00<00:08, 1172.18it/s]DistCalc:   4%|▎         | 354/10000 [00:00<00:08, 1170.63it/s]DistCalc:   5%|▍         | 472/10000 [00:00<00:08, 1170.64it/s]DistCalc:   6%|▌         | 590/10000 [00:00<00:08, 1172.12it/s]DistCalc:   7%|▋         | 708/10000 [00:00<00:07, 1172.87it/s]DistCalc:   8%|▊         | 826/10000 [00:00<00:07, 1173.54it/s]DistCalc:   9%|▉         | 944/10000 [00:00<00:07, 1173.50it/s]DistCalc:  11%|█         | 1063/10000 [00:00<00:07, 1176.37it/s]DistCalc:  12%|█▏        | 1182/10000 [00:01<00:07, 1178.80it/s]DistCalc:  13%|█▎        | 1300/10000 [00:01<00:07, 1179.06it/s]DistCalc:  14%|█▍        | 1418/10000 [00:01<00:07, 1177.59it/s]DistCalc:  15%|█▌        | 1536/10000 [00:01<00:07, 1176.17it/s]DistCalc:  17%|█▋        | 1655/10000 [00:01<00:07, 1177.62it/s]DistCalc:  18%|█▊        | 1773/10000 [00:01<00:07, 1172.72it/s]DistCalc:  19%|█▉        | 1891/10000 [00:01<00:06, 1173.66it/s]DistCalc:  20%|██        | 2009/10000 [00:01<00:06, 1173.86it/s]DistCalc:  21%|██▏       | 2127/10000 [00:01<00:06, 1174.74it/s]DistCalc:  22%|██▏       | 2245/10000 [00:01<00:06, 1175.15it/s]DistCalc:  24%|██▎       | 2363/10000 [00:02<00:06, 1174.95it/s]DistCalc:  25%|██▍       | 2481/10000 [00:02<00:06, 1170.96it/s]DistCalc:  26%|██▌       | 2599/10000 [00:02<00:06, 1170.35it/s]DistCalc:  27%|██▋       | 2717/10000 [00:02<00:06, 1170.41it/s]DistCalc:  28%|██▊       | 2835/10000 [00:02<00:06, 1171.66it/s]DistCalc:  30%|██▉       | 2953/10000 [00:02<00:06, 1172.44it/s]DistCalc:  31%|███       | 3073/10000 [00:02<00:05, 1178.91it/s]DistCalc:  32%|███▏      | 3192/10000 [00:02<00:05, 1181.57it/s]DistCalc:  33%|███▎      | 3311/10000 [00:02<00:05, 1182.51it/s]DistCalc:  34%|███▍      | 3431/10000 [00:02<00:05, 1184.89it/s]DistCalc:  36%|███▌      | 3550/10000 [00:03<00:05, 1185.29it/s]DistCalc:  37%|███▋      | 3669/10000 [00:03<00:05, 1185.14it/s]DistCalc:  38%|███▊      | 3788/10000 [00:03<00:05, 1184.75it/s]DistCalc:  39%|███▉      | 3908/10000 [00:03<00:05, 1187.84it/s]DistCalc:  40%|████      | 4028/10000 [00:03<00:05, 1189.28it/s]DistCalc:  41%|████▏     | 4149/10000 [00:03<00:04, 1192.81it/s]DistCalc:  43%|████▎     | 4276/10000 [00:03<00:04, 1213.92it/s]DistCalc:  44%|████▍     | 4404/10000 [00:03<00:04, 1231.31it/s]DistCalc:  45%|████▌     | 4531/10000 [00:03<00:04, 1242.01it/s]DistCalc:  47%|████▋     | 4656/10000 [00:03<00:04, 1241.63it/s]DistCalc:  48%|████▊     | 4781/10000 [00:04<00:04, 1243.09it/s]DistCalc:  49%|████▉     | 4906/10000 [00:04<00:04, 1244.18it/s]DistCalc:  50%|█████     | 5032/10000 [00:04<00:03, 1246.93it/s]DistCalc:  52%|█████▏    | 5158/10000 [00:04<00:03, 1249.58it/s]DistCalc:  53%|█████▎    | 5284/10000 [00:04<00:03, 1250.65it/s]DistCalc:  54%|█████▍    | 5410/10000 [00:04<00:03, 1251.65it/s]DistCalc:  55%|█████▌    | 5536/10000 [00:04<00:03, 1249.68it/s]DistCalc:  57%|█████▋    | 5661/10000 [00:04<00:03, 1228.72it/s]DistCalc:  58%|█████▊    | 5784/10000 [00:04<00:03, 1216.23it/s]DistCalc:  59%|█████▉    | 5906/10000 [00:04<00:03, 1211.85it/s]DistCalc:  60%|██████    | 6028/10000 [00:05<00:03, 1206.06it/s]DistCalc:  61%|██████▏   | 6149/10000 [00:05<00:03, 1203.40it/s]DistCalc:  63%|██████▎   | 6270/10000 [00:05<00:03, 1201.66it/s]DistCalc:  64%|██████▍   | 6391/10000 [00:05<00:03, 1202.35it/s]DistCalc:  65%|██████▌   | 6512/10000 [00:05<00:02, 1199.73it/s]DistCalc:  66%|██████▋   | 6632/10000 [00:05<00:02, 1198.96it/s]DistCalc:  68%|██████▊   | 6752/10000 [00:05<00:02, 1197.92it/s]DistCalc:  69%|██████▊   | 6872/10000 [00:05<00:02, 1194.37it/s]DistCalc:  70%|██████▉   | 6993/10000 [00:05<00:02, 1197.49it/s]DistCalc:  71%|███████   | 7116/10000 [00:05<00:02, 1206.37it/s]DistCalc:  72%|███████▏  | 7239/10000 [00:06<00:02, 1212.93it/s]DistCalc:  74%|███████▎  | 7362/10000 [00:06<00:02, 1217.78it/s]DistCalc:  75%|███████▍  | 7485/10000 [00:06<00:02, 1220.50it/s]DistCalc:  76%|███████▌  | 7608/10000 [00:06<00:01, 1221.53it/s]DistCalc:  77%|███████▋  | 7731/10000 [00:06<00:01, 1222.13it/s]DistCalc:  79%|███████▊  | 7854/10000 [00:06<00:01, 1218.03it/s]DistCalc:  80%|███████▉  | 7977/10000 [00:06<00:01, 1219.67it/s]DistCalc:  81%|████████  | 8101/10000 [00:06<00:01, 1223.81it/s]DistCalc:  82%|████████▏ | 8224/10000 [00:06<00:01, 1223.27it/s]DistCalc:  83%|████████▎ | 8349/10000 [00:06<00:01, 1228.71it/s]DistCalc:  85%|████████▍ | 8475/10000 [00:07<00:01, 1237.06it/s]DistCalc:  86%|████████▌ | 8601/10000 [00:07<00:01, 1242.17it/s]DistCalc:  87%|████████▋ | 8727/10000 [00:07<00:01, 1245.03it/s]DistCalc:  89%|████████▊ | 8853/10000 [00:07<00:00, 1248.16it/s]DistCalc:  90%|████████▉ | 8978/10000 [00:07<00:00, 1248.49it/s]DistCalc:  91%|█████████ | 9103/10000 [00:07<00:00, 1248.88it/s]DistCalc:  92%|█████████▏| 9229/10000 [00:07<00:00, 1250.30it/s]DistCalc:  94%|█████████▎| 9355/10000 [00:07<00:00, 1251.02it/s]DistCalc:  95%|█████████▍| 9481/10000 [00:07<00:00, 1248.91it/s]DistCalc:  96%|█████████▌| 9607/10000 [00:07<00:00, 1247.32it/s]DistCalc:  97%|█████████▋| 9733/10000 [00:08<00:00, 1250.69it/s]DistCalc:  99%|█████████▊| 9859/10000 [00:08<00:00, 1248.84it/s]DistCalc: 100%|█████████▉| 9986/10000 [00:08<00:00, 1252.34it/s]                                                                /home/tejassharma/big-ann-benchmarks/plot.py:33: RuntimeWarning: Mean of empty slice.
-  return -np.log(np.array(ys)).mean()
-/home/tejassharma/miniconda3/envs/benchmarks/lib/python3.10/site-packages/numpy/_core/_methods.py:145: RuntimeWarning: invalid value encountered in scalar divide
-  ret = ret.dtype.type(ret / rcount)
-/home/tejassharma/big-ann-benchmarks/plot.py:41: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string "-" (-> linestyle='-'). The keyword argument will take precedence.
-  handle, = plt.plot(xs, ys, '-', label=algo, color=color,
-Computing knn metrics
-Warning: 10000/2 queries contained ties accounted for in recall
-  3:                                                                     cufe_linscan        0.068     1045.216
-Computing knn metrics
-Warning: 10000/2 queries contained ties accounted for in recall
-  4:                                                                   sparse_hnswlib        0.000     2824.678
-Computing knn metrics
-Warning: 10000/2 queries contained ties accounted for in recall
-  5:                                                                   sparse_hnswlib        0.000      469.460
-writing csv output to results/movielens_plot.csv
-Looking at track:filter, dataset:movielens
-Looking for runbook  None
-Looking at track:filter, dataset:kddb
-Looking for runbook  None
-Looking at track:filter, dataset:avazu
-Looking for runbook  None
-Looking at track:filter, dataset:bigann-1B
-Looking for runbook  None
-Groundtruth for Dataset BigANNDataset in dimension 128, with distance euclidean, search_type knn, size: Q 10000 B 1000000000 not found.
-Looking at track:filter, dataset:bigann-100M
-Looking for runbook  None
-Groundtruth for Dataset BigANNDataset in dimension 128, with distance euclidean, search_type knn, size: Q 10000 B 100000000 not found.
-Looking at track:filter, dataset:bigann-10M
-Looking for runbook  None
-Groundtruth for Dataset BigANNDataset in dimension 128, with distance euclidean, search_type knn, size: Q 10000 B 10000000 not found.
-Looking at track:filter, dataset:deep-1B
-Looking for runbook  None
-Groundtruth for Dataset Deep1BDataset in dimension 96, with distance euclidean, search_type knn, size: Q 10000 B 1000000000 not found.
-Looking at track:filter, dataset:deep-100M
-Looking for runbook  None
-Groundtruth for Dataset Deep1BDataset in dimension 96, with distance euclidean, search_type knn, size: Q 10000 B 100000000 not found.
-Looking at track:filter, dataset:deep-10M
-Looking for runbook  None
-Groundtruth for Dataset Deep1BDataset in dimension 96, with distance euclidean, search_type knn, size: Q 10000 B 10000000 not found.
-Looking at track:filter, dataset:ssnpp-1B
-Looking for runbook  None
-Groundtruth for Dataset SSNPPDataset in dimension 256, with distance euclidean, search_type range, size: Q 100000 B 1000000000 not found.
-Looking at track:filter, dataset:ssnpp-10M
-Looking for runbook  None
-Groundtruth for Dataset SSNPPDataset in dimension 256, with distance euclidean, search_type range, size: Q 100000 B 10000000 not found.
-Looking at track:filter, dataset:ssnpp-100M
-Looking for runbook  None
-Groundtruth for Dataset SSNPPDataset in dimension 256, with distance euclidean, search_type range, size: Q 100000 B 100000000 not found.
-Looking at track:filter, dataset:ssnpp-1M
-Looking for runbook  None
-Groundtruth for Dataset SSNPPDataset in dimension 256, with distance euclidean, search_type range, size: Q 100000 B 1000000 not found.
-Looking at track:filter, dataset:text2image-1B
-Looking for runbook  None
-Groundtruth for Dataset Text2Image1B in dimension 200, with distance ip, search_type knn, size: Q 100000 B 1000000000 not found.
-Looking at track:filter, dataset:text2image-1M
-Looking for runbook  None
-Groundtruth for Dataset Text2Image1B in dimension 200, with distance ip, search_type knn, size: Q 100000 B 1000000 not found.
-Looking at track:filter, dataset:text2image-10M
-Looking for runbook  None
-Groundtruth for Dataset Text2Image1B in dimension 200, with distance ip, search_type knn, size: Q 100000 B 10000000 not found.
-Looking at track:filter, dataset:text2image-100M
-Looking for runbook  None
-Groundtruth for Dataset Text2Image1B in dimension 200, with distance ip, search_type knn, size: Q 100000 B 100000000 not found.
-Looking at track:filter, dataset:msturing-1B
-Looking for runbook  None
-Groundtruth for Dataset MSTuringANNS in dimension 100, with distance euclidean, search_type knn, size: Q 100000 B 1000000000 not found.
-Looking at track:filter, dataset:msturing-100M
-Looking for runbook  None
-Groundtruth for Dataset MSTuringANNS in dimension 100, with distance euclidean, search_type knn, size: Q 100000 B 100000000 not found.
-Looking at track:filter, dataset:msturing-10M
-Looking for runbook  None
-Groundtruth for Dataset MSTuringANNS in dimension 100, with distance euclidean, search_type knn, size: Q 100000 B 10000000 not found.
-Looking at track:filter, dataset:msturing-1M
-Looking for runbook  None
-Groundtruth for Dataset MSTuringANNS in dimension 100, with distance euclidean, search_type knn, size: Q 100000 B 1000000 not found.
-Looking at track:filter, dataset:msturing-10M-clustered
-Looking for runbook  None
-Groundtruth for Dataset MSTuringClustered10M in dimension 100, with distance euclidean, search_type knn, size: Q 10000 B 10000000 not found.
-Looking at track:filter, dataset:msturing-30M-clustered
-Looking for runbook  None
-Groundtruth for Dataset MSTuringClustered30M in dimension 100, with distance euclidean, search_type knn, size: Q 10000 B 29998994 not found.
-Looking at track:filter, dataset:msspacev-1B
-Looking for runbook  None
-Groundtruth for Dataset MSSPACEV1B in dimension 100, with distance euclidean, search_type knn, size: Q 29316 B 1000000000 not found.
-Looking at track:filter, dataset:msspacev-100M
-Looking for runbook  None
-Groundtruth for Dataset MSSPACEV1B in dimension 100, with distance euclidean, search_type knn, size: Q 29316 B 100000000 not found.
-Looking at track:filter, dataset:msspacev-10M
-Looking for runbook  None
-Groundtruth for Dataset MSSPACEV1B in dimension 100, with distance euclidean, search_type knn, size: Q 29316 B 10000000 not found.
-Looking at track:filter, dataset:msspacev-1M
-Looking for runbook  None
-Groundtruth for Dataset MSSPACEV1B in dimension 100, with distance euclidean, search_type knn, size: Q 29316 B 1000000 not found.
-Looking at track:filter, dataset:yfcc-10M
-Looking for runbook  None
-Groundtruth for Dataset YFCC100MDataset in dimension 192, with distance euclidean, search_type knn_filtered, size: Q 100000 B 10000000 not found.
-Looking at track:filter, dataset:yfcc-10M-unfiltered
-Looking for runbook  None
-Groundtruth for Dataset YFCC100MDataset in dimension 192, with distance euclidean, search_type knn, size: Q 100000 B 10000000 not found.
-Looking at track:filter, dataset:yfcc-10M-dummy
-Looking for runbook  None
-Groundtruth for Dataset YFCC100MDataset in dimension 192, with distance euclidean, search_type knn_filtered, size: Q 100000 B 10000000 not found.
-Looking at track:filter, dataset:yfcc-10M-dummy-unfiltered
-Looking for runbook  None
-Groundtruth for Dataset YFCC100MDataset in dimension 192, with distance euclidean, search_type knn, size: Q 100000 B 10000000 not found.
-Looking at track:filter, dataset:yfcc-images-100M
-Looking for runbook  None
-Groundtruth for Dataset YFCCImagesDataset in dimension 1280, with distance euclidean, search_type knn, size: Q 100000 B 98735605 not found.
-Looking at track:filter, dataset:yfcc-images-10M
-Looking for runbook  None
-Groundtruth for Dataset YFCCImagesDataset in dimension 1280, with distance euclidean, search_type knn, size: Q 100000 B 10000000 not found.
-Looking at track:filter, dataset:yfcc-images-1M
-Looking for runbook  None
-Groundtruth for Dataset YFCCImagesDataset in dimension 1280, with distance euclidean, search_type knn, size: Q 100000 B 1000000 not found.
-Looking at track:filter, dataset:sparse-small
-Looking for runbook  None
-Groundtruth for Dataset SparseDataset in dimension nan, with distance ip, search_type knn, size: Q 6980 B 100000 not found.
-Looking at track:filter, dataset:sparse-1M
-Looking for runbook  None
-Looking at track:filter, dataset:sparse-full
-Looking for runbook  None
-Looking at track:filter, dataset:wikipedia-35M
-Looking for runbook  None
-Groundtruth for Dataset WikipediaDataset in dimension 768, with distance ip, search_type knn, size: Q 5000 B 35000000 not found.
-Looking at track:filter, dataset:wikipedia-10M
-Looking for runbook  None
-Groundtruth for Dataset WikipediaDataset in dimension 768, with distance ip, search_type knn, size: Q 5000 B 10000000 not found.
-Looking at track:filter, dataset:wikipedia-1M
-Looking for runbook  None
-Groundtruth for Dataset WikipediaDataset in dimension 768, with distance ip, search_type knn, size: Q 5000 B 1000000 not found.
-Looking at track:filter, dataset:wikipedia-100K
-Looking for runbook  None
-Groundtruth for Dataset WikipediaDataset in dimension 768, with distance ip, search_type knn, size: Q 5000 B 100000 not found.
-Looking at track:filter, dataset:msmarco-100M
-Looking for runbook  None
-Groundtruth for Dataset MSMarcoWebSearchDataset in dimension 768, with distance ip, search_type knn, size: Q 9376 B 101070374 not found.
-Looking at track:filter, dataset:msmarco-10M
-Looking for runbook  None
-Groundtruth for Dataset MSMarcoWebSearchDataset in dimension 768, with distance ip, search_type knn, size: Q 9376 B 10000000 not found.
-Looking at track:filter, dataset:msmarco-1M
-Looking for runbook  None
-Groundtruth for Dataset MSMarcoWebSearchDataset in dimension 768, with distance ip, search_type knn, size: Q 9376 B 1000000 not found.
-Looking at track:filter, dataset:openai-2M
-Looking for runbook  None
-Groundtruth for Dataset OpenAIArXivDataset in dimension 1536, with distance euclidean, search_type knn, size: Q 20000 B 2321096 not found.
-Looking at track:filter, dataset:openai-100K
-Looking for runbook  None
-Groundtruth for Dataset OpenAIArXivDataset in dimension 1536, with distance euclidean, search_type knn, size: Q 20000 B 100000 not found.
-Looking at track:filter, dataset:random-xs
-Looking for runbook  None
-Groundtruth for Random(10000) not found.
-Looking at track:filter, dataset:random-s
-Looking for runbook  None
-Groundtruth for Random(100000) not found.
-Looking at track:filter, dataset:random-xs-clustered
-Looking for runbook  None
-Groundtruth for RandomClustered(10000) not found.
-Looking at track:filter, dataset:random-range-xs
-Looking for runbook  None
-Groundtruth for RandomRange(10000) not found.
-Looking at track:filter, dataset:random-range-s
-Looking for runbook  None
-Groundtruth for RandomRange(100000) not found.
-Looking at track:filter, dataset:random-filter-s
-Looking for runbook  None
-Groundtruth for RandomFilter(100000) not found.
-Looking at track:filter, dataset:openai-embedding-1M
-Looking for runbook  None
-Groundtruth for Dataset OpenAIEmbedding1M in dimension 1536, with distance eculidean, search_type knn, size: Q 100000 B 1000000 not found.
-Looking at track:filter, dataset:custom-sparse
-Traceback (most recent call last):
-  File "/home/tejassharma/big-ann-benchmarks/data_export.py", line 96, in <module>
-    dataset = DATASETS[dataset_name]()
-  File "/home/tejassharma/big-ann-benchmarks/benchmark/datasets.py", line 1501, in <lambda>
-    'custom-sparse': lambda: CustomSparseDataset(),
-NameError: name 'CustomSparseDataset' is not defined. Did you mean: 'LocalSparseDataset'?
-[INFO] Generating definition file...
-
-==========================================
- Processing Dataset: movielens
-==========================================
-
-[INFO] Running linscan on movielens
-Command: /home/tejassharma/miniconda3/envs/benchmarks/bin/python -u run.py --dataset movielens --algorithm linscan --definitions algos-all-variants.yaml --count 10 --nodocker
-
-[INFO] Running cufe on movielens
-Command: /home/tejassharma/miniconda3/envs/benchmarks/bin/python -u run.py --dataset movielens --algorithm cufe --definitions algos-all-variants.yaml --count 10 --nodocker
-
-[INFO] Running nle on movielens
-Command: /home/tejassharma/miniconda3/envs/benchmarks/bin/python -u run.py --dataset movielens --algorithm nle --definitions algos-all-variants.yaml --count 10 --nodocker
-[ERROR] Failed: Running nle on movielens
-
-[INFO] Running shnsw on movielens
-Command: /home/tejassharma/miniconda3/envs/benchmarks/bin/python -u run.py --dataset movielens --algorithm shnsw --definitions algos-all-variants.yaml --count 10 --nodocker
-
-[INFO] Running binary-splitting on movielens
-Command: /home/tejassharma/miniconda3/envs/benchmarks/bin/python -u run.py --dataset movielens --algorithm binary-splitting --definitions algos-all-variants.yaml --count 10 --nodocker
-[ERROR] Failed: Running binary-splitting on movielens
-
-[INFO] Running double-group-testing on movielens
-Command: /home/tejassharma/miniconda3/envs/benchmarks/bin/python -u run.py --dataset movielens --algorithm double-group-testing --definitions algos-all-variants.yaml --count 10 --nodocker
-[ERROR] Failed: Running double-group-testing on movielens
-
-[INFO] Plotting results for movielens
-Command: /home/tejassharma/miniconda3/envs/benchmarks/bin/python plot.py --dataset movielens --count 10 --output results/movielens_plot.png
-
-==========================================
- Exporting All Results to all_results.csv
-==========================================
-
-[INFO] Exporting CSV
-Command: /home/tejassharma/miniconda3/envs/benchmarks/bin/python data_export.py --output all_results.csv
-[ERROR] Failed: Exporting CSV
-
-[DONE] Pipeline complete.

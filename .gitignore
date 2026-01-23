@@ -5,6 +5,7 @@ research-bigann-linscan-cufe/*
 SHNSW/
 *.pyc
 *.o
+*.out
 
 data/*
 *.class
