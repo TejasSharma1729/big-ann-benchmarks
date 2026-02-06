@@ -160,7 +160,13 @@ if __name__ == "__main__":
     parser.add_argument(
         '--private-query',
         help='Use the private queries and ground truth',
-        action='store_true')
+        action='store_true'
+    )
+    parser.add_argument(
+        "--verbose",
+        help="Enable verbose output",
+        action="store_true"
+    )
     args = parser.parse_args()
 
     # FORCE RECOMPUTE
@@ -198,12 +204,45 @@ if __name__ == "__main__":
     if not args.csv:
         unique_algorithms = get_unique_algorithms()
         results = load_all_results(args.dataset, count, neurips23track=args.neurips23track)
+        if args.verbose:
+            try:
+                print(f"DEBUG: loaded {len(results)} result entries from {args.dataset}")
+                for j, (properties, run) in enumerate(results):
+                    try:
+                        algo = properties.get('algo', properties.get(b'algo', b'')).decode() if isinstance(properties.get('algo', None), (bytes, bytearray)) else properties.get('algo', '')
+                    except Exception:
+                        algo = properties.get('algo', '')
+                    try:
+                        params = properties.get('name', properties.get(b'name', b'')).decode() if isinstance(properties.get('name', None), (bytes, bytearray)) else properties.get('name', '')
+                    except Exception:
+                        params = properties.get('name', '')
+                    try:
+                        keys = list(run.keys())
+                    except Exception as e:
+                        keys = f'error listing keys: {e}'
+                    neigh_info = ''
+                    if hasattr(run, '__contains__') and 'neighbors' in run:
+                        try:
+                            n = np.array(run['neighbors'])
+                            neigh_info = f'neighbors shape={n.shape}'
+                        except Exception as e:
+                            neigh_info = f'neighbors read error: {e}'
+                    dist_info = ''
+                    if hasattr(run, '__contains__') and 'distances' in run:
+                        try:
+                            d = np.array(run['distances'])
+                            dist_info = f'distances shape={d.shape}'
+                        except Exception as e:
+                            dist_info = f'distances read error: {e}'
+                    print(f"DEBUG [{j}] algo={algo} params={params} keys={keys} {neigh_info} {dist_info}")
+            except Exception as e:
+                print(f"DEBUG: error while introspecting results: {e}")
         if args.private_query:
             runs = compute_metrics(dataset.get_private_groundtruth(k=args.count),
-                                    results, args.x_axis, args.y_axis, args.recompute, dataset=dataset)
+                                    results, args.x_axis, args.y_axis, args.recompute, dataset=dataset, verbose=args.verbose)
         else:
             runs = compute_metrics(dataset.get_groundtruth(k=args.count),
-                                    results, args.x_axis, args.y_axis, args.recompute, dataset=dataset)
+                                    results, args.x_axis, args.y_axis, args.recompute, dataset=dataset, verbose=args.verbose)
     else:
         with open(args.csv) as csvfile:
             reader = csv.DictReader(csvfile)

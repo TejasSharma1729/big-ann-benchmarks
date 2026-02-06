@@ -9,7 +9,7 @@ datasets = ['sparse-1M', 'sparse-full', 'movielens', 'kddb', 'avazu']
 # Algorithms to run
 # Note: 'nle', 'cufe', 'linscan' map to the same underlying implementation in --nodocker mode 
 # if they share the same python module, but we run them as separate entries to fulfill the request.
-algorithms = ['linscan', 'cufe', 'nle', 'shnsw', 'binary-splitting', 'double-group-testing']
+algorithms = ['nle']
 
 definition_file = 'algos-all-variants.yaml'
 results_csv = 'all_results.csv'

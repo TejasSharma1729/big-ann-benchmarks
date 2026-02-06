@@ -45,7 +45,7 @@ def create_pointset(data, xn, yn):
 
 
 def compute_metrics(true_nn, res, metric_1, metric_2,
-                    recompute=False, dataset=None):
+                    recompute=False, dataset=None, verbose=False):
     all_results = {}
     
     # Pre-cache dataset and queries if needed
@@ -54,6 +54,17 @@ def compute_metrics(true_nn, res, metric_1, metric_2,
     for i, (properties, run) in enumerate(res):
         algo = properties['algo']
         algo_name = properties['name']
+        if verbose:
+            try:
+                pname = properties.get('name', properties.get(b'name', b''))
+                an = pname.decode() if isinstance(pname, (bytes, bytearray)) else pname
+            except Exception:
+                an = properties.get('name', '')
+            try:
+                keys = list(run.keys())
+            except Exception as e:
+                keys = f'error listing keys: {e}'
+            print(f"DEBUG compute_metrics: i={i} algo_prop={properties.get('algo', '')} name={an} keys={keys}")
         # cache indices to avoid access to hdf5 file
         if metric_1 == "ap"  or metric_2 == "ap":
             run_nn = (numpy.array(run['lims']),
@@ -61,24 +72,27 @@ def compute_metrics(true_nn, res, metric_1, metric_2,
                     numpy.array(run['distances']))
         else:
              # Load distances if available for possible tie handling
-            if 'distances' in run:
+            if 'distances' in run and not recompute:
                 run_nn = (numpy.array(run['neighbors']), numpy.array(run['distances']))
             elif dataset is not None:
                 # Compute distances on the fly!
                 neighbors = numpy.array(run['neighbors'])
                 
                 if 'queries' not in data_cache:
-                    print("Loading dataset for distance computation...")
+                    if verbose:
+                        print("DEBUG compute_metrics: Loading dataset for distance computation...")
                     data_cache['queries'] = dataset.get_queries()
                     try:
                         data_cache['dataset'] = dataset.get_dataset() # Assumes fits in memory
                     except AssertionError:
-                        print("Dataset too large for standard loader, using direct sparse read...")
+                        if verbose:
+                            print("DEBUG compute_metrics: Dataset too large for standard loader, using direct sparse read...")
                         from benchmark.dataset_io import read_sparse_matrix
                         fn = dataset.get_dataset_fn()
                         data_cache['dataset'] = read_sparse_matrix(fn, do_mmap=False)
                 
-                print(f"Computing distances for {algo_name}...")
+                if verbose:
+                    print(f"DEBUG compute_metrics: Computing distances for {algo_name}...")
                 X = data_cache['queries']
                 DB = data_cache['dataset']
                 
@@ -187,7 +201,7 @@ def compute_metrics_all_runs(dataset, dataset_name, res, recompute=False,
                 neighbors = numpy.array(run['neighbors'])
                 print(f"DEBUG: Processing run. Distances key present: {'distances' in run}")
                 
-                if 'distances' in run:
+                if 'distances' in run and not recompute:
                     dists = numpy.array(run['distances'])
                     run_nn = (neighbors, dists)
                 else:

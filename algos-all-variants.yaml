@@ -1,16 +1,5 @@
 avazu:
-  cufe: &id001
-    base-args:
-    - '@metric'
-    constructor: LinscanCUFE
-    docker-tag: null
-    module: neurips23.sparse.cufe.linscan
-    run-groups:
-      base:
-        args:
-        - {}
-        query-args: '[[{"budget": 50}], [{"budget": 4000}]]'
-  knns_binary: &id002
+  binary-splitting: &id001
     base-args:
     - '@metric'
     constructor: KNNSBinarySplitting
@@ -22,7 +11,19 @@ avazu:
         - k: '@count'
           use_threading: true
         query-args: '[[{"mode": "batch"}]]'
-  knns_double: &id003
+  cufe:
+    base-args:
+    - '@metric'
+    constructor: LinscanCUFE
+    docker-tag: null
+    module: neurips23.sparse.cufe.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 1}], [{"budget": 4}], [{"budget": 6}], [{"budget":
+          10}]]'
+  double-group-testing: &id002
     base-args:
     - '@metric'
     constructor: KNNSDoubleGroupTesting
@@ -34,7 +35,7 @@ avazu:
         - k: '@count'
           use_threading: true
         query-args: '[[{"mode": "batch"}]]'
-  linscan: &id004
+  linscan:
     base-args:
     - '@metric'
     constructor: Linscan
@@ -44,8 +45,34 @@ avazu:
       base:
         args:
         - {}
-        query-args: '[[{"budget": 50}], [{"budget": 4000}]]'
-  shnsw: &id005
+        query-args: '[[{"budget": 1}], [{"budget": 4}], [{"budget": 6}], [{"budget":
+          10}]]'
+  nle: &id003
+    base-args:
+    - '@metric'
+    constructor: NLE
+    docker-tag: neurips23-sparse-nle
+    module: neurips23.sparse.nle.nle
+    run-groups:
+      base:
+        args:
+        - t1: 32
+          t2: 128
+        query-args: '[{"k1": 4, "k2": 40, "k3": 1}, {"k1": 4, "k2": 40, "k3": 10},
+          {"k1": 4, "k2": 40, "k3": 100}, {"k1": 4, "k2": 40, "k3": 1000}]'
+  pyanns:
+    base-args:
+    - '@metric'
+    constructor: Pyanns
+    docker-tag: null
+    module: neurips23.ood.pyanns.pyanns
+    run-groups:
+      base:
+        args:
+        - L: 500
+          R: 48
+        query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
+  shnsw: &id004
     base-args:
     - '@metric'
     constructor: SparseHNSW
@@ -57,28 +84,169 @@ avazu:
         - M: 32
           buildthreads: -1
           efConstruction: 200
-        query-args: '[[{"efSearch": 40}], [{"efSearch": 500}]]'
+        query-args: '[[{"efSearch": 40}], [{"efSearch": 200}], [{"efSearch": 500}],
+          [{"efSearch": 1000}]]'
 kddb:
-  cufe: *id001
-  knns_binary: *id002
-  knns_double: *id003
-  linscan: *id004
-  shnsw: *id005
+  binary-splitting: *id001
+  cufe:
+    base-args:
+    - '@metric'
+    constructor: LinscanCUFE
+    docker-tag: null
+    module: neurips23.sparse.cufe.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 5}], [{"budget": 20}], [{"budget": 50}], [{"budget":
+          100}]]'
+  double-group-testing: *id002
+  linscan:
+    base-args:
+    - '@metric'
+    constructor: Linscan
+    docker-tag: null
+    module: neurips23.sparse.linscan.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 5}], [{"budget": 20}], [{"budget": 50}], [{"budget":
+          100}]]'
+  nle: *id003
+  pyanns:
+    base-args:
+    - '@metric'
+    constructor: Pyanns
+    docker-tag: null
+    module: neurips23.ood.pyanns.pyanns
+    run-groups:
+      base:
+        args:
+        - L: 500
+          R: 48
+        query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
+  shnsw: *id004
 movielens:
-  cufe: *id001
-  knns_binary: *id002
-  knns_double: *id003
-  linscan: *id004
-  shnsw: *id005
+  binary-splitting: *id001
+  cufe:
+    base-args:
+    - '@metric'
+    constructor: LinscanCUFE
+    docker-tag: null
+    module: neurips23.sparse.cufe.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 5}], [{"budget": 20}], [{"budget": 50}], [{"budget":
+          100}]]'
+  double-group-testing: *id002
+  linscan:
+    base-args:
+    - '@metric'
+    constructor: Linscan
+    docker-tag: null
+    module: neurips23.sparse.linscan.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 5}], [{"budget": 20}], [{"budget": 50}], [{"budget":
+          100}]]'
+  nle: *id003
+  pyanns:
+    base-args:
+    - '@metric'
+    constructor: Pyanns
+    docker-tag: null
+    module: neurips23.ood.pyanns.pyanns
+    run-groups:
+      base:
+        args:
+        - L: 500
+          R: 48
+        query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
+  shnsw: *id004
 sparse-1M:
-  cufe: *id001
-  knns_binary: *id002
-  knns_double: *id003
-  linscan: *id004
-  shnsw: *id005
+  binary-splitting: *id001
+  cufe:
+    base-args:
+    - '@metric'
+    constructor: LinscanCUFE
+    docker-tag: null
+    module: neurips23.sparse.cufe.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 1}], [{"budget": 4}], [{"budget": 6}], [{"budget":
+          10}]]'
+  double-group-testing: *id002
+  linscan:
+    base-args:
+    - '@metric'
+    constructor: Linscan
+    docker-tag: null
+    module: neurips23.sparse.linscan.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 1}], [{"budget": 4}], [{"budget": 6}], [{"budget":
+          10}]]'
+  nle: *id003
+  pyanns:
+    base-args:
+    - '@metric'
+    constructor: Pyanns
+    docker-tag: null
+    module: neurips23.ood.pyanns.pyanns
+    run-groups:
+      base:
+        args:
+        - L: 500
+          R: 48
+        query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
+  shnsw: *id004
 sparse-full:
-  cufe: *id001
-  knns_binary: *id002
-  knns_double: *id003
-  linscan: *id004
-  shnsw: *id005
+  binary-splitting: *id001
+  cufe:
+    base-args:
+    - '@metric'
+    constructor: LinscanCUFE
+    docker-tag: null
+    module: neurips23.sparse.cufe.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 5}], [{"budget": 50}], [{"budget": 60}], [{"budget":
+          500}]]'
+  double-group-testing: *id002
+  linscan:
+    base-args:
+    - '@metric'
+    constructor: Linscan
+    docker-tag: null
+    module: neurips23.sparse.linscan.linscan
+    run-groups:
+      base:
+        args:
+        - {}
+        query-args: '[[{"budget": 5}], [{"budget": 50}], [{"budget": 60}], [{"budget":
+          500}]]'
+  nle: *id003
+  pyanns:
+    base-args:
+    - '@metric'
+    constructor: Pyanns
+    docker-tag: null
+    module: neurips23.ood.pyanns.pyanns
+    run-groups:
+      base:
+        args:
+        - L: 500
+          R: 48
+        query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
+  shnsw: *id004

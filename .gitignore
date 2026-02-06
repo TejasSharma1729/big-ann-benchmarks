@@ -3,6 +3,7 @@
 research-bigann-linscan/*
 research-bigann-linscan-cufe/*
 SHNSW/
+tttt/
 *.pyc
 *.o
 *.out
@@ -12,6 +13,7 @@ data/*
 
 *.log
 
+results/
 results/*
 !results/*.png
 
