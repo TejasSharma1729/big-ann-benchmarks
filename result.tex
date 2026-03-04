@@ -1,0 +1,101 @@
+\begin{table}{H}
+\ttfamily
+\centering
+\begin{minipage}{0.48\textwidth}\centering \begin{tabular}{c | r | r}
+\multicolumn{3}{*}{Benchmark results for Sparse full dataset} \\
+\toprule
+Algorithm & Recall & QPS \\
+\midrule
+\makecell{Binary splitting \\ (Threaded)} & 0.99999 & 4.3 \\[6pt]
+\makecell{Double group \\ (Threaded)} & 0.99999 & 6.4 \\[6pt]
+\makecell{Linscan (Budget: 5)} & 0.29752 & 194.5 \\
+\makecell{Linscan (Budget: 50)} & 0.64033 & 153.3 \\
+\makecell{Linscan (Budget: 60)} & 0.64130 & 149.5 \\
+\makecell{Linscan (Budget: 500)} & 0.86835 & 73.8 \\[6pt]
+\makecell{Cufe (Budget: 5)} & 0.27413 & 192.0 \\
+\makecell{Cufe (Budget: 50)} & 0.65964 & 165.2 \\
+\makecell{Cufe (Budget: 60)} & 0.68168 & 161.9 \\
+\makecell{Cufe (Budget: 500)} & 0.92630 & 83.4 \\[6pt]
+\makecell{SHNSW (efSearch: 40)} & 0.86122 & 21005.2 \\
+\makecell{SHNSW (efSearch: 200)} & 0.94417 & 5932.7 \\
+\makecell{SHNSW (efSearch: 500)} & 0.96642 & 2634.8 \\
+\makecell{SHNSW (efSearch: 1000)} & 0.97496 & 1386.4 \\[6pt]
+\makecell{NLE (k\textsubscript{3} = 1)} & 0.86352 & 4441.8 \\
+\makecell{NLE (k\textsubscript{3} = 10)} & 0.87265 & 4135.6 \\
+\makecell{NLE (k\textsubscript{3} = 100)} & 0.90241 & 3471.3 \\
+\makecell{NLE (k\textsubscript{3} = 1000)} & 0.91967 & 2538.8 \\[6pt]
+\bottomrule
+\end{tabular} \end{minipage} \hfill
+\begin{minipage}{0.48\textwidth}\centering \begin{tabular}{c | r | r}
+\multicolumn{3}{*}{Benchmark results for Movielens dataset} \\
+\toprule
+Algorithm & Recall & QPS \\
+\midrule
+\makecell{Binary splitting \\ (Threaded)} & 1.00000 & 3.6 \\[6pt]
+\makecell{Double group \\ (Threaded)} & 1.00000 & 10.6 \\[6pt]
+\makecell{Linscan (Budget: 5)} & 0.22302 & 3672.9 \\
+\makecell{Linscan (Budget: 20)} & 0.51776 & 1961.3 \\
+\makecell{Linscan (Budget: 50)} & 0.79691 & 1174.5 \\
+\makecell{Linscan (Budget: 100)} & 0.93838 & 861.3 \\[6pt]
+\makecell{Cufe (Budget: 5)} & 0.05774 & 3774.8 \\
+\makecell{Cufe (Budget: 20)} & 0.08400 & 2038.4 \\
+\makecell{Cufe (Budget: 50)} & 0.08307 & 1332.1 \\
+\makecell{Cufe (Budget: 100)} & 0.07028 & 1129.6 \\[6pt]
+\makecell{SHNSW (efSearch: 40)} & 0.68694 & 2876.7 \\
+\makecell{SHNSW (efSearch: 200)} & 0.83144 & 876.0 \\
+\makecell{SHNSW (efSearch: 500)} & 0.87316 & 477.0 \\
+\makecell{SHNSW (efSearch: 1000)} & 0.89104 & 320.8 \\[6pt]
+\makecell{NLE (k\textsubscript{3} = 1)} & 0.09914 & 2085.6 \\
+\makecell{NLE (k\textsubscript{3} = 10)} & 0.09914 & 2081.6 \\
+\makecell{NLE (k\textsubscript{3} = 100)} & 0.09914 & 2066.4 \\
+\makecell{NLE (k\textsubscript{3} = 1000)} & 0.09914 & 2060.2 \\[6pt]
+\bottomrule
+\end{tabular} \end{minipage}\\[1em]
+\begin{minipage}{0.48\textwidth}\centering \begin{tabular}{c | r | r}
+\multicolumn{3}{*}{Benchmark results for KDDB dataset} \\
+\toprule
+Algorithm & Recall & QPS \\
+\midrule
+\makecell{Binary splitting \\ (Threaded)} & 1.00000 & 19.5 \\[6pt]
+\makecell{Double group \\ (Threaded)} & 1.00000 & 18.6 \\[6pt]
+\makecell{Linscan (Budget: 5)} & 0.28807 & 86.8 \\
+\makecell{Linscan (Budget: 20)} & 0.55912 & 79.3 \\
+\makecell{Linscan (Budget: 50)} & 0.76988 & 77.3 \\
+\makecell{Linscan (Budget: 100)} & 0.89137 & 75.2 \\[6pt]
+\makecell{Cufe (Budget: 5)} & 0.23233 & 84.7 \\
+\makecell{Cufe (Budget: 20)} & 0.42819 & 77.9 \\
+\makecell{Cufe (Budget: 50)} & 0.59902 & 77.2 \\
+\makecell{Cufe (Budget: 100)} & 0.69416 & 76.7 \\[6pt]
+\makecell{SHNSW (efSearch: 40)} & 0.84158 & 85323.1 \\
+\makecell{SHNSW (efSearch: 200)} & 0.96432 & 24946.7 \\
+\makecell{SHNSW (efSearch: 500)} & 0.97524 & 12276.8 \\
+\makecell{SHNSW (efSearch: 1000)} & 0.97770 & 7597.5 \\[6pt]
+% KDDB: NLE does not work
+\bottomrule
+\end{tabular} \end{minipage} \hfill
+\begin{minipage}{0.48\textwidth}\centering \begin{tabular}{c | r | r}
+\multicolumn{3}{*}{Benchmark results for Avazu-App dataset} \\
+\toprule
+Algorithm & Recall & QPS \\
+\midrule
+\makecell{Binary splitting \\ (Threaded)} & 1.00000 & 7.3 \\[6pt]
+\makecell{Double group \\ (Threaded)} & 1.00000 & 2.2 \\[6pt]
+\makecell{Linscan (Budget: 1)} & 0.27817 & 158.3 \\
+\makecell{Linscan (Budget: 4)} & 0.29806 & 145.2 \\
+\makecell{Linscan (Budget: 6)} & 0.30752 & 142.2 \\
+\makecell{Linscan (Budget: 10)} & 0.32214 & 139.3 \\[6pt]
+\makecell{Cufe (Budget: 1)} & 0.27919 & 156.8 \\
+\makecell{Cufe (Budget: 4)} & 0.29738 & 147.7 \\
+\makecell{Cufe (Budget: 6)} & 0.30203 & 146.2 \\
+\makecell{Cufe (Budget: 10)} & 0.31324 & 143.0 \\[6pt]
+\makecell{SHNSW (efSearch: 40)} & 0.88784 & 88283.5 \\
+\makecell{SHNSW (efSearch: 200)} & 0.96602 & 25782.1 \\
+\makecell{SHNSW (efSearch: 500)} & 0.98391 & 12207.9 \\
+\makecell{SHNSW (efSearch: 1000)} & 0.99032 & 6648.0 \\[6pt]
+\makecell{NLE (k\textsubscript{3} = 1)} & 0.73807 & 1833.4 \\
+\makecell{NLE (k\textsubscript{3} = 10)} & 0.73807 & 1833.3 \\
+\makecell{NLE (k\textsubscript{3} = 100)} & 0.73807 & 1832.5 \\
+\makecell{NLE (k\textsubscript{3} = 1000)} & 0.73807 & 1829.7 \\[6pt]
+\bottomrule
+\end{tabular} \end{minipage}
+\end{table}
