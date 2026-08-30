@@ -41,26 +41,26 @@ cufe_config = {
     }
 }
 
-# NLE config (Legacy/Wrapper) - DISABLED per request
-# NLE config (neurips23 sparse NLE)
-nle_config = {
-    'docker-tag': 'neurips23-sparse-nle',
-    'module': 'neurips23.sparse.nle.nle',
-    'constructor': 'NLE',
-    'base-args': ['@metric'],
-    'run-groups': {
-        'base': {
-            # single index build config; multiple query argument variants
-            'args': [{'t1': 32, 't2': 128}],
-            'query-args': json.dumps([
-                {"k1": 4, "k2": 40, "k3": 1},
-                {"k1": 4, "k2": 40, "k3": 10},
-                {"k1": 4, "k2": 40, "k3": 100},
-                {"k1": 4, "k2": 40, "k3": 1000}
-            ])
-        }
-    }
-}
+# # NLE config (Legacy/Wrapper) - DISABLED per request
+# # NLE config (neurips23 sparse NLE)
+# nle_config = {
+#     'docker-tag': 'neurips23-sparse-nle',
+#     'module': 'neurips23.sparse.nle.nle',
+#     'constructor': 'NLE',
+#     'base-args': ['@metric'],
+#     'run-groups': {
+#         'base': {
+#             # single index build config; multiple query argument variants
+#             'args': [{'t1': 32, 't2': 128}],
+#             'query-args': json.dumps([
+#                 {"k1": 4, "k2": 40, "k3": 1},
+#                 {"k1": 4, "k2": 40, "k3": 10},
+#                 {"k1": 4, "k2": 40, "k3": 100},
+#                 {"k1": 4, "k2": 40, "k3": 1000}
+#             ])
+#         }
+#     }
+# }
 
 # SHNSW
 shnsw_config = {
@@ -153,7 +153,7 @@ for ds in datasets:
         'linscan': linscan_ds,
         'cufe': cufe_ds,
         'shnsw': shnsw_config,
-        'nle': nle_config,
+        # 'nle': nle_config,
         'pyanns': pyanns_config,
         'double-group-testing': double_group_testing_config,
         'binary-splitting': binary_splitting_config

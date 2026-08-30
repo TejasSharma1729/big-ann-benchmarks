@@ -152,56 +152,40 @@ std::pair<std::vector<std::vector<uint>>, size_t> KNNIndexDataset::search_double
 
     // Build Query Index Hierarchy
     KNNIndex<INVERTED_LEVELS> query_pools = build_knn_index<INVERTED_LEVELS>(queries);
+    std::vector<std::vector<uint>> results(queries.size());
 
-    // Initialize Results
-    std::pair<std::vector<std::vector<uint>>, size_t> result;
-    result.first.resize(queries.size());
-    result.second = 0;
-    
-    // Shared atomic counter for dynamic load balancing
-    std::atomic<uint> next_qpool_idx(0);
-    std::atomic<size_t> total_dots(0);
-    uint num_qpools = query_pools.size();
-
-    // Worker Lambda
-    auto worker = [&]() {
-        size_t local_dots = 0;
-        while (true) {
-            uint qpool_idx = next_qpool_idx.fetch_add(1, std::memory_order_relaxed);
-            if (qpool_idx >= num_qpools) break;
-
+    if (!this->use_threading) {
+        size_t total_dots = 0;
+        for (uint qpool_idx = 0; qpool_idx < query_pools.size(); qpool_idx++) {
             process_double_group_qpool(
                 qpool_idx,
                 query_pools,
                 this->data_index,
                 queries,
                 this->k_val,
-                result.first,
-                local_dots
+                results,
+                total_dots
             );
         }
-        total_dots += local_dots;
-    };
-
-    // Parallel Execution
-    uint num_threads = this->use_threading ? std::thread::hardware_concurrency() : 1;
-    if (num_threads == 0) num_threads = 4;
-
-    if (num_threads > 1) {
-        std::vector<std::thread> threads;
-        threads.reserve(num_threads);
-        for (uint i = 0; i < num_threads; ++i) {
-            threads.emplace_back(worker);
-        }
-        for (auto &t : threads) {
-            if (t.joinable()) t.join();
-        }
-    } else {
-        worker();
+        return {results, total_dots};
     }
 
-    result.second = total_dots.load();
-    return result;
+    std::atomic<size_t> total_dots = 0;
+    #pragma omp parallel for
+    for (uint qpool_idx = 0; qpool_idx < query_pools.size(); qpool_idx++) {
+        size_t local_dots = 0;
+        process_double_group_qpool(
+            qpool_idx,
+            query_pools,
+            this->data_index,
+            queries,
+            this->k_val,
+            results,
+            local_dots
+        );
+        total_dots += local_dots;
+    }
+    return {results, total_dots.load()};
 }
 
 
@@ -291,7 +275,9 @@ std::pair<KNNIndexDoubleGroupResultElem, size_t> KNNIndexDataset::search_pool_ba
 }
 
 std::pair<std::vector<std::vector<uint>>, size_t> KNNIndexDataset::search_threshold_batch(
-    const SparseMat &queries, double threshold) {
+    const SparseMat &queries, 
+    double threshold
+) {
     KNNIndex<INVERTED_LEVELS> query_pools = build_knn_index<INVERTED_LEVELS>(const_cast<SparseMat&>(queries));
     std::vector<std::pair<KNNIndexDoubleGroupResultElem, size_t>> async_results(
         this->data_index.size() * query_pools.size());

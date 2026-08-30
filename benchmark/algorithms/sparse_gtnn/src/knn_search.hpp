@@ -195,37 +195,16 @@ std::pair<std::vector<uint>, size_t> KNNIndexDataset::search_threshold(SparseVec
 }
 
 std::pair<std::vector<std::vector<uint>>, size_t> KNNIndexDataset::search_parallel(SparseMat &queries) {
-    std::pair<std::vector<std::vector<uint>>, size_t> result;
-    result.first.resize(queries.size());
-    std::atomic<size_t> total_comps(0);
-    std::atomic<uint> next_query_idx(0); // Atomic counter for dynamic scheduling
+   std::vector<std::vector<uint>> results(queries.size());
+   std::atomic<size_t> total_comps(0);
 
-    uint num_threads = std::thread::hardware_concurrency();
-    if (num_threads == 0) num_threads = 4;
-    
-    std::vector<std::thread> threads;
-
-    auto worker = [&]() {
-        size_t local_comps = 0;
-        while (true) {
-            uint i = next_query_idx.fetch_add(1, std::memory_order_relaxed);
-            if (i >= queries.size()) break;
-
+    {
+        #pragma omp parallel for
+        for (uint i = 0; i < queries.size(); i++) {
             auto [res, comps] = this->search(queries[i]);
-            result.first[i] = std::move(res);
-            local_comps += comps;
+            results[i] = res;
+            total_comps += comps;
         }
-        total_comps += local_comps;
-    };
-
-    for (uint i = 0; i < num_threads; ++i) {
-        threads.emplace_back(worker);
     }
-
-    for (auto &t : threads) {
-        if (t.joinable()) t.join();
-    }
-
-    result.second = total_comps.load();
-    return result;
+    return {results, size_t(total_comps.load())};
 }

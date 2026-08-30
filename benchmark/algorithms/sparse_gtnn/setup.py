@@ -48,7 +48,8 @@ ext_modules = [
             pybind11.get_include(),
             "src" 
         ],
-        extra_compile_args=["-O3", "-march=native", "-ffast-math", "-std=c++20", "-pthread", "-funroll-loops"], 
+        extra_compile_args=["-O3", "-march=native", "-ffast-math", "-std=c++20", "-pthread", "-funroll-loops", "-fopenmp"],
+        extra_link_args=["-fopenmp"],
         language="c++",
     ),
 ]

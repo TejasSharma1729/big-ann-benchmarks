@@ -131,6 +131,8 @@ class KNNSBase(BaseANN):
         # X is a csr_matrix
         assert self.index is not None, "Index not built. Call fit() first."
         query_vecs = self._convert_matrix(X)
+
+        assert len(query_vecs) == X.shape[0], f"Mismatch in number of queries, expected {X.shape[0]}, got {len(query_vecs)}"
             
         print("Searching...")
         t0 = time.time()
@@ -139,10 +141,11 @@ class KNNSBase(BaseANN):
             print(f"Using Single-Group Testing (standard loop, threading={self.use_threading})...")
             results_list = []
             ops = 0
-            for i, vec in enumerate(query_vecs):
-                if self.use_threading:
-                    res, op = self.index.search_parallel(vec)
-                else:
+            if self.use_threading:
+                res, ops = self.index.search_parallel(query_vecs)
+                results_list.extend(res)
+            else: 
+                for i, vec in enumerate(query_vecs):
                     res, op = self.index.search(vec)
                 results_list.append(res)
                 ops += op
@@ -154,6 +157,8 @@ class KNNSBase(BaseANN):
             # Use search_double_group for batch processing (Double-group-testing)
             results_list, ops = self.index.search_double_group(query_vecs)
             print(f"Total Dot Products (Double): {ops}")
+
+        assert len(results_list) == X.shape[0], f"Mismatch in number of results and queries, expected {X.shape[0]}, got {len(results_list)}"
             
         print(f"Search completed in {time.time()-t0:.2f}s")
         

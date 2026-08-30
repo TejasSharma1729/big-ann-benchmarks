@@ -47,19 +47,6 @@ avazu:
         - {}
         query-args: '[[{"budget": 1}], [{"budget": 4}], [{"budget": 6}], [{"budget":
           10}]]'
-  nle: &id003
-    base-args:
-    - '@metric'
-    constructor: NLE
-    docker-tag: neurips23-sparse-nle
-    module: neurips23.sparse.nle.nle
-    run-groups:
-      base:
-        args:
-        - t1: 32
-          t2: 128
-        query-args: '[{"k1": 4, "k2": 40, "k3": 1}, {"k1": 4, "k2": 40, "k3": 10},
-          {"k1": 4, "k2": 40, "k3": 100}, {"k1": 4, "k2": 40, "k3": 1000}]'
   pyanns:
     base-args:
     - '@metric'
@@ -72,7 +59,7 @@ avazu:
         - L: 500
           R: 48
         query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
-  shnsw: &id004
+  shnsw: &id003
     base-args:
     - '@metric'
     constructor: SparseHNSW
@@ -113,7 +100,6 @@ kddb:
         - {}
         query-args: '[[{"budget": 5}], [{"budget": 20}], [{"budget": 50}], [{"budget":
           100}]]'
-  nle: *id003
   pyanns:
     base-args:
     - '@metric'
@@ -126,7 +112,7 @@ kddb:
         - L: 500
           R: 48
         query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
-  shnsw: *id004
+  shnsw: *id003
 movielens:
   binary-splitting: *id001
   cufe:
@@ -154,7 +140,6 @@ movielens:
         - {}
         query-args: '[[{"budget": 5}], [{"budget": 20}], [{"budget": 50}], [{"budget":
           100}]]'
-  nle: *id003
   pyanns:
     base-args:
     - '@metric'
@@ -167,7 +152,7 @@ movielens:
         - L: 500
           R: 48
         query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
-  shnsw: *id004
+  shnsw: *id003
 sparse-1M:
   binary-splitting: *id001
   cufe:
@@ -195,7 +180,6 @@ sparse-1M:
         - {}
         query-args: '[[{"budget": 1}], [{"budget": 4}], [{"budget": 6}], [{"budget":
           10}]]'
-  nle: *id003
   pyanns:
     base-args:
     - '@metric'
@@ -208,7 +192,7 @@ sparse-1M:
         - L: 500
           R: 48
         query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
-  shnsw: *id004
+  shnsw: *id003
 sparse-full:
   binary-splitting: *id001
   cufe:
@@ -236,7 +220,6 @@ sparse-full:
         - {}
         query-args: '[[{"budget": 5}], [{"budget": 50}], [{"budget": 60}], [{"budget":
           500}]]'
-  nle: *id003
   pyanns:
     base-args:
     - '@metric'
@@ -249,4 +232,4 @@ sparse-full:
         - L: 500
           R: 48
         query-args: '[{"ef": 50}, {"ef": 100}, {"ef": 200}, {"ef": 400}]'
-  shnsw: *id004
+  shnsw: *id003
